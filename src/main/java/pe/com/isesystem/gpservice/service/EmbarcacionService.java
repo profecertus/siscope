@@ -27,4 +27,8 @@ public class EmbarcacionService {
         List<EmbarcacionDto> listEmbarcacionDto = pageEmbarcacion.stream().toList().stream().map((element) -> modelMapper.map(element, EmbarcacionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(listEmbarcacionDto, pageEmbarcacion.getPageable(), pageEmbarcacion.getTotalElements());
     }
+
+    public EmbarcacionDto saveEmbarcacion(EmbarcacionDto embarcacionDto){
+        return modelMapper.map(embarcacionRepository.save(modelMapper.map(embarcacionDto, Embarcacion.class)), EmbarcacionDto.class);
+    }
 }

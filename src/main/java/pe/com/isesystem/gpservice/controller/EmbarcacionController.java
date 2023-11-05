@@ -6,10 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pe.com.isesystem.gpservice.dto.EmbarcacionDto;
 import pe.com.isesystem.gpservice.service.EmbarcacionService;
 
@@ -24,5 +21,11 @@ public class EmbarcacionController {
         final Pageable pageable = PageRequest.of(numpag, tampag );
         Page<EmbarcacionDto> respuesta = embarcacionService.getAllEmbarcacion(pageable);
         return new ResponseEntity<>(respuesta, HttpStatus.OK);
+    }
+
+    @PostMapping("/saveEmbarcacion")
+    public ResponseEntity<EmbarcacionDto> saveEmbarcacion(@RequestBody EmbarcacionDto embarcacionDto){
+        EmbarcacionDto emb = embarcacionService.saveEmbarcacion(embarcacionDto);
+        return new ResponseEntity<>(emb, HttpStatus.OK);
     }
 }
