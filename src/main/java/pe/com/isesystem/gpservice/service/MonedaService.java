@@ -6,7 +6,9 @@ import pe.com.isesystem.gpservice.dto.MonedaDto;
 import pe.com.isesystem.gpservice.model.Moneda;
 import pe.com.isesystem.gpservice.repository.MonedaRepository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MonedaService{
@@ -26,5 +28,9 @@ public class MonedaService{
         }else{
             return null;
         }
+    }
+
+    public List<MonedaDto> getAll(){
+        return monedaRepository.findAll().stream().map((element) -> modelMapper.map(element, MonedaDto.class)).collect(Collectors.toList());
     }
 }

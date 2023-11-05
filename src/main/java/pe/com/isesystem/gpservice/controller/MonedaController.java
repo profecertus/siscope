@@ -12,6 +12,7 @@ import pe.com.isesystem.gpservice.dto.MonedaDto;
 import pe.com.isesystem.gpservice.model.Moneda;
 import pe.com.isesystem.gpservice.service.MonedaService;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,4 +28,9 @@ public class MonedaController {
         return  response;
     }
 
+    @GetMapping("/getAllMoneda")
+    public ResponseEntity<List<MonedaDto>> getAllMoneda(){
+        List<MonedaDto> monedaDtoList = monedaService.getAll();
+        return new ResponseEntity<>(monedaDtoList, HttpStatus.OK);
+    }
 }
