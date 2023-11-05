@@ -10,8 +10,8 @@ import pe.com.isesystem.gpservice.model.TrabajadorId;
 @Repository
 public interface TrabajadorRepository extends JpaRepository<Trabajador, TrabajadorId> {
 
-    @Override
-    Page<Trabajador> findAll(Pageable pageable);
+
+    Page<Trabajador> findAllByEstadoAndEstadoRegOrderById(Pageable pageable,Boolean estado, Boolean estadoReg);
 
     @Override
     <S extends Trabajador> S save(S entity);
