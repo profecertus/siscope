@@ -2,6 +2,7 @@ package pe.com.isesystem.gpservice.dto;
 
 import lombok.*;
 import pe.com.isesystem.gpservice.model.Moneda;
+import pe.com.isesystem.gpservice.model.TipoDocumento;
 
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Setter
 public class TrabajadorDto  implements Serializable {
     private TrabajadorIdDto id;
+    private TipoDocumentoDto idTipodoc;
     private String nombres;
     private String apellidoPat;
     private String apellidoMat;
