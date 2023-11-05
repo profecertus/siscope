@@ -1,9 +1,6 @@
 package pe.com.isesystem.gpservice.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -18,6 +15,7 @@ import java.math.BigDecimal;
 @Table(name = "EMBARCACION")
 public class Embarcacion {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_EMBARCACION", nullable = false)
     private Long id;
 

@@ -23,7 +23,7 @@ public class EmbarcacionService {
     }
 
     public Page<EmbarcacionDto> getAllEmbarcacion(Pageable pageable){
-        Page<Embarcacion> pageEmbarcacion = embarcacionRepository.findAll(pageable);
+        Page<Embarcacion> pageEmbarcacion = embarcacionRepository.findAllByEstadoAndEstadoRegOrderById(pageable, true, true);
         List<EmbarcacionDto> listEmbarcacionDto = pageEmbarcacion.stream().toList().stream().map((element) -> modelMapper.map(element, EmbarcacionDto.class)).collect(Collectors.toList());
         return new PageImpl<>(listEmbarcacionDto, pageEmbarcacion.getPageable(), pageEmbarcacion.getTotalElements());
     }

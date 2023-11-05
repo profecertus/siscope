@@ -8,8 +8,7 @@ import pe.com.isesystem.gpservice.model.Embarcacion;
 
 @Repository
 public interface EmbarcacionRepository extends JpaRepository<Embarcacion, Long> {
-    @Override
-    Page<Embarcacion> findAll(Pageable pageable);
+    Page<Embarcacion> findAllByEstadoAndEstadoRegOrderById(Pageable pageable, Boolean estado, Boolean estadoReg);
 
     @Override
     <S extends Embarcacion> S save(S entity);
