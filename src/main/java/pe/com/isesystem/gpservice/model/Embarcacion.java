@@ -2,6 +2,8 @@ package pe.com.isesystem.gpservice.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 
@@ -18,6 +20,11 @@ public class Embarcacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_EMBARCACION", nullable = false)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @JoinColumn(name = "ID_PROVEEDOR", nullable = false)
+    private Proveedor idProveedor;
 
     @Column(name = "NOMBRE", length = 100)
     private String nombre;
