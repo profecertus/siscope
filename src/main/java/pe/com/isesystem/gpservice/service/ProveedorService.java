@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pe.com.isesystem.gpservice.dto.ProveedorDto;
+import pe.com.isesystem.gpservice.dto.RelProvTiposervDto;
 import pe.com.isesystem.gpservice.dto.TipoServicioDto;
 import pe.com.isesystem.gpservice.model.Proveedor;
 import pe.com.isesystem.gpservice.model.RelProvTiposerv;
@@ -33,8 +34,17 @@ public class ProveedorService {
         List<Proveedor> proveedors = proveedorRepository.getAllByEstadoAndEstadoRegOrderById(estado, estadoReg);
         List<ProveedorDto> proveedorsDtos = new ArrayList<>();
         if(!proveedors.isEmpty())
-            for(Proveedor proveedor:proveedors)
-                proveedorsDtos.add( this.modelMapper.map(proveedor, ProveedorDto.class) );
+            for(Proveedor proveedor:proveedors){
+                //Por cada Proveedor capturo el tipo de Servicio
+                List<RelProvTiposervDto> relProvTiposervs = relProvServRepository.
+                        findAllById_IdProveedor(proveedor.getId()).stream().
+                        map((element) -> modelMapper.map(element, RelProvTiposervDto.class)).
+                        collect(Collectors.toList());
+                ProveedorDto proveedorDto = this.modelMapper.map(proveedor, ProveedorDto.class);
+                proveedorDto.setRelProvTiposervDto( relProvTiposervs );
+                proveedorsDtos.add( proveedorDto );
+            }
+
         return proveedorsDtos;
     }
 

@@ -3,6 +3,7 @@ package pe.com.isesystem.gpservice.dto;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * DTO for {@link pe.com.isesystem.gpservice.model.Proveedor}
@@ -23,4 +24,5 @@ public class ProveedorDto implements Serializable {
     String correo;
     Boolean estado;
     Boolean estadoReg;
+    List<RelProvTiposervDto> relProvTiposervDto;
 }
