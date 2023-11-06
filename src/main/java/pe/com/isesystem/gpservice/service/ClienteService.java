@@ -32,11 +32,10 @@ public class ClienteService {
         return listClienteDto;
     }
 
-    public List<ClienteDto> saveCliente(ClienteDto clienteDto){
+    public ClienteDto saveCliente(ClienteDto clienteDto){
         Cliente cliente = modelMapper.map(clienteDto, Cliente.class);
         Cliente client = clienteRepository.save(cliente);
-        List<ClienteDto> clienteDtos = getAllCliente();
-        return clienteDtos;
+        return modelMapper.map(client, ClienteDto.class);
     }
 
 }

@@ -23,9 +23,8 @@ public class ClienteController {
     }
 
     @PostMapping("/saveCliente")
-    public ResponseEntity<Object> saveCliente(@RequestBody ClienteDto clienteDto){
-        List<ClienteDto> clienteDtoList = clienteService.saveCliente(clienteDto);
-        RespuestaHttp resp = new RespuestaHttp();
-        return new ResponseEntity<>(clienteDtoList, HttpStatus.OK);
+    public ResponseEntity<ClienteDto> saveCliente(@RequestBody ClienteDto clienteDto){
+        ClienteDto clientDto = clienteService.saveCliente(clienteDto);
+        return new ResponseEntity<>(clientDto, HttpStatus.OK);
     }
 }
