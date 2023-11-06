@@ -7,8 +7,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.1.4</version>
         <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-    
+    </parent>    
     <groupId>pe.com.isesystem</groupId>
     <artifactId>GPService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
