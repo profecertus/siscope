@@ -8,7 +8,7 @@ import pe.com.isesystem.gpservice.model.Planta;
 
 @Repository
 public interface PlantaRepository extends JpaRepository<Planta, Long> {
-    Page<Planta> findAllByEstadoAndEstadoReg(Pageable pageable, Boolean estado, Boolean estadoReg);
+    Page<Planta> findAllByEstadoAndEstadoRegOrderById(Pageable pageable, Boolean estado, Boolean estadoReg);
 
     @Override
     <S extends Planta> S save(S entity);

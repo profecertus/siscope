@@ -58,7 +58,7 @@ public class PlantaService {
     public Page<ResPlantaWithDestino> getAllPlanta(Pageable pageable) {
         List<ResPlantaWithDestino> retorno = new ArrayList<>();
 
-        Page<Planta> p = plantaRepository.findAllByEstadoAndEstadoReg(pageable, true, true);
+        Page<Planta> p = plantaRepository.findAllByEstadoAndEstadoRegOrderById(pageable, true, true);
 
         List<PlantaDto> contentPlantaDto = p.getContent().stream()
                 .map(this::mapPlantotoPlantaDto)
