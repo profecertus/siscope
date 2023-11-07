@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class RelProvTiposervDto implements Serializable {
     //RelProvTiposervIdDto id;
     ProveedorDto idProveedor;
-    //TipoServicioDto idTipoServicio;
+    TipoServicioDto idTipoServicio;
     //Boolean estado;
     //Boolean estadoReg;
 }
