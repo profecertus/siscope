@@ -1,10 +1,10 @@
 package pe.com.isesystem.gpservice.dto;
 
 import lombok.*;
-import pe.com.isesystem.gpservice.model.Proveedor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -19,4 +19,5 @@ public class EmbarcacionDto  implements Serializable {
     private BigDecimal tonelaje;
     private String estado;
     private String estadoReg;
+    private List<RelEmbarcacionProveedorDto> relEmbarcacionProveedorDto;
 }

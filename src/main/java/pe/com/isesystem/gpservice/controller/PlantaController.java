@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.com.isesystem.gpservice.configuration.RespuestaHttp;
-import pe.com.isesystem.gpservice.dto.PlantaDto;
 import pe.com.isesystem.gpservice.response.ResPlantaWithDestino;
 import pe.com.isesystem.gpservice.service.PlantaService;
 
