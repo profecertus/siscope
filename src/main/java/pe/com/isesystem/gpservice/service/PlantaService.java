@@ -19,7 +19,6 @@ import pe.com.isesystem.gpservice.response.ResPlantaWithDestino;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PlantaService {
@@ -75,9 +74,11 @@ public class PlantaService {
                 }
             }
             //Ahora busco los proveedores asociados a cada planta
-            List<RelPlantaProveedorDto> relPlantaProveedorDtoList = this.relPlantaProveedorRepository.findAllByIdPlanta_Id(planta.getIdPlanta()).stream().
-                    map((element) -> modelMapper.map(element,
-                            RelPlantaProveedorDto.class)).collect(Collectors.toList());
+            List<RelPlantaProveedorDto> relPlantaProveedorDtoList =
+                    this.relPlantaProveedorRepository.
+                            findAllByIdPlanta_Id(planta.getIdPlanta()).stream().
+                            map((element) -> modelMapper.map(element,
+                                RelPlantaProveedorDto.class)).toList();
             //Los encapsulo en la respuesta
             retorno.add(new ResPlantaWithDestino(
                     this.modelMapper.map(planta, PlantaDto.class),
