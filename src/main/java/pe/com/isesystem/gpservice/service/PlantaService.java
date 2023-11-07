@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 import pe.com.isesystem.gpservice.dto.DestinoDto;
 import pe.com.isesystem.gpservice.dto.PlantaDto;
 import pe.com.isesystem.gpservice.dto.RelPlantaDestinoDto;
+import pe.com.isesystem.gpservice.dto.RelPlantaProveedorDto;
 import pe.com.isesystem.gpservice.model.*;
 import pe.com.isesystem.gpservice.repository.DestinoRepository;
 import pe.com.isesystem.gpservice.repository.PlantaRepository;
 import pe.com.isesystem.gpservice.repository.RelPlantaDestinoRepository;
+import pe.com.isesystem.gpservice.repository.RelPlantaProveedorRepository;
 import pe.com.isesystem.gpservice.response.ResPlantaWithDestino;
 
 
@@ -26,14 +28,14 @@ public class PlantaService {
     private PlantaRepository plantaRepository;
     private ModelMapper modelMapper;
     private RelPlantaDestinoRepository relPlantaDestinoRepository;
-    private DestinoRepository destinoRepository;
+    private RelPlantaProveedorRepository relPlantaProveedorRepository;
 
     public PlantaService(PlantaRepository plantaRepository, ModelMapper modelMapper,
-                         RelPlantaDestinoRepository relPlantaDestinoRepository, DestinoRepository destinoRepository){
+                         RelPlantaDestinoRepository relPlantaDestinoRepository,
+                         RelPlantaProveedorRepository relPlantaProveedorRepository){
         this.plantaRepository = plantaRepository;
         this.modelMapper = modelMapper;
         this.relPlantaDestinoRepository = relPlantaDestinoRepository;
-        this.destinoRepository = destinoRepository;
     }
 
     public PlantaDto mapPlantotoPlantaDto(Planta planta) {
@@ -66,7 +68,7 @@ public class PlantaService {
 
         ObjectMapper objectMapper = new ObjectMapper();
         for(PlantaDto planta:contentPlantaDto){
-
+            //Para cada planta busco su destino
             List<RelPlantaDestino> rel = relPlantaDestinoRepository.findAllByIdPlanta(this.modelMapper.map(planta, Planta.class));
             List<DestinoDto> lista = new ArrayList<>();
             if(!rel.isEmpty()){
@@ -75,8 +77,16 @@ public class PlantaService {
                         lista.add(rpdto.getIdDestino());
                 }
             }
-            retorno.add(new ResPlantaWithDestino(this.modelMapper.map(planta, PlantaDto.class), lista ));
+            //Ahora busco los proveedores asociados a cada planta
+            List<RelPlantaProveedorDto> relPlantaProveedorDtoList = this.relPlantaProveedorRepository.findAllByIdPlanta_Id(planta.getIdPlanta()).stream().
+                    map((element) -> modelMapper.map(element,
+                            RelPlantaProveedorDto.class)).collect(Collectors.toList());
+            //Los encapsulo en la respuesta
+            retorno.add(new ResPlantaWithDestino(
+                    this.modelMapper.map(planta, PlantaDto.class),
+                    lista, relPlantaProveedorDtoList));
         }
+        //Retorno el objeto creado
         return new PageImpl<>(retorno, p.getPageable(), p.getTotalElements());
     }
 }
