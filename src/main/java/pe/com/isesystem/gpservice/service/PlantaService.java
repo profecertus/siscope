@@ -76,9 +76,11 @@ public class PlantaService {
             //Ahora busco los proveedores asociados a cada planta
             List<RelPlantaProveedorDto> relPlantaProveedorDtoList =
                     this.relPlantaProveedorRepository.
-                            findAllByIdPlanta_Id(planta.getIdPlanta()).stream().
-                            map((element) -> modelMapper.map(element,
-                                RelPlantaProveedorDto.class)).toList();
+                            findAllByIdPlanta_Id(planta.getIdPlanta()).
+                            stream().map((element) -> modelMapper.map(element, RelPlantaProveedorDto.class)
+                            ).toList();
+
+
             //Los encapsulo en la respuesta
             retorno.add(new ResPlantaWithDestino(
                     this.modelMapper.map(planta, PlantaDto.class),
