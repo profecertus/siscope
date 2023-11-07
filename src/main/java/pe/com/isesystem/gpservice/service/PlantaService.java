@@ -1,6 +1,5 @@
 package pe.com.isesystem.gpservice.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -12,7 +11,6 @@ import pe.com.isesystem.gpservice.dto.PlantaDto;
 import pe.com.isesystem.gpservice.dto.RelPlantaDestinoDto;
 import pe.com.isesystem.gpservice.dto.RelPlantaProveedorDto;
 import pe.com.isesystem.gpservice.model.*;
-import pe.com.isesystem.gpservice.repository.DestinoRepository;
 import pe.com.isesystem.gpservice.repository.PlantaRepository;
 import pe.com.isesystem.gpservice.repository.RelPlantaDestinoRepository;
 import pe.com.isesystem.gpservice.repository.RelPlantaProveedorRepository;
@@ -25,10 +23,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class PlantaService {
-    private PlantaRepository plantaRepository;
-    private ModelMapper modelMapper;
-    private RelPlantaDestinoRepository relPlantaDestinoRepository;
-    private RelPlantaProveedorRepository relPlantaProveedorRepository;
+    private final PlantaRepository plantaRepository;
+    private final ModelMapper modelMapper;
+    private final RelPlantaDestinoRepository relPlantaDestinoRepository;
+    private final RelPlantaProveedorRepository relPlantaProveedorRepository;
 
     public PlantaService(PlantaRepository plantaRepository, ModelMapper modelMapper,
                          RelPlantaDestinoRepository relPlantaDestinoRepository,
@@ -36,11 +34,11 @@ public class PlantaService {
         this.plantaRepository = plantaRepository;
         this.modelMapper = modelMapper;
         this.relPlantaDestinoRepository = relPlantaDestinoRepository;
+        this.relPlantaProveedorRepository = relPlantaProveedorRepository;
     }
 
     public PlantaDto mapPlantotoPlantaDto(Planta planta) {
-        PlantaDto plantaDto = this.modelMapper.map(planta, PlantaDto.class);
-        return plantaDto;
+        return this.modelMapper.map(planta, PlantaDto.class);
     }
 
     @Transactional
@@ -64,9 +62,8 @@ public class PlantaService {
 
         List<PlantaDto> contentPlantaDto = p.getContent().stream()
                 .map(this::mapPlantotoPlantaDto)
-                .collect(Collectors.toList());
+                .toList();
 
-        ObjectMapper objectMapper = new ObjectMapper();
         for(PlantaDto planta:contentPlantaDto){
             //Para cada planta busco su destino
             List<RelPlantaDestino> rel = relPlantaDestinoRepository.findAllByIdPlanta(this.modelMapper.map(planta, Planta.class));
