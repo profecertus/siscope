@@ -12,6 +12,5 @@ import java.io.Serializable;
 public class RelPlantaProveedorDto  implements Serializable {
     private RelPlantaProveedorIdDto id;
     //private PlantaDto idPlanta;
-    //private ProveedorDto idProveedor;
-    //private TipoServicioDto idTipoServicio;
+    private RelProvTiposervDto relProvTiposerv;
 }
