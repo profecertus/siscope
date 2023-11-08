@@ -24,6 +24,7 @@ public class PlantaController {
         return new ResponseEntity<>(plantaDtoList, HttpStatus.OK);
     }
 
+
     @GetMapping("/getPlanta/{idPlanta}")
     public ResPlantaWithDestino getAllPage(@PathVariable Long idPlanta){
         return  plantaService.getPlanta(idPlanta);
