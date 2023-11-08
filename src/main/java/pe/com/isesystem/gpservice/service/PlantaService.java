@@ -19,6 +19,7 @@ import pe.com.isesystem.gpservice.response.ResPlantaWithDestino;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlantaService {
@@ -69,8 +70,8 @@ public class PlantaService {
             List<DestinoDto> lista = new ArrayList<>();
             if(!rel.isEmpty()){
                 for(RelPlantaDestino rela:rel){
-                        RelPlantaDestinoDto rpdto = this.modelMapper.map(rela, RelPlantaDestinoDto.class);
-                        lista.add(rpdto.getIdDestino());
+                    RelPlantaDestinoDto rpdto = this.modelMapper.map(rela, RelPlantaDestinoDto.class);
+                    lista.add(rpdto.getIdDestino());
                 }
             }
             //Ahora busco los proveedores asociados a cada planta
@@ -88,5 +89,33 @@ public class PlantaService {
         }
         //Retorno el objeto creado
         return new PageImpl<>(retorno, p.getPageable(), p.getTotalElements());
+    }
+
+    public ResPlantaWithDestino getPlanta(Long idPlanta) {
+
+        Planta p = plantaRepository.findAllById(idPlanta);
+
+        PlantaDto plantaDto = modelMapper.map(p, PlantaDto.class);
+
+        List<RelPlantaDestino> rel = relPlantaDestinoRepository.findAllByIdPlanta(p);
+        List<DestinoDto> lista = new ArrayList<>();
+        if(!rel.isEmpty()){
+            for(RelPlantaDestino rela:rel){
+                RelPlantaDestinoDto rpdto = this.modelMapper.map(rela, RelPlantaDestinoDto.class);
+                lista.add(rpdto.getIdDestino());
+            }
+        }
+        //Ahora busco los proveedores asociados a cada planta
+        List<RelPlantaProveedorDto> relPlantaProveedorDtoList =
+            this.relPlantaProveedorRepository.
+            findAllByIdPlanta_Id(plantaDto.getIdPlanta()).
+            stream().map((element) -> modelMapper.map(element, RelPlantaProveedorDto.class)
+            ).toList();
+        ResPlantaWithDestino retorno = new ResPlantaWithDestino();
+        retorno.setPlantaDto(plantaDto);
+        retorno.setRelPlantaDestinoDto(lista);
+        retorno.setRelPlantaProveedorDtoList(relPlantaProveedorDtoList);
+        //Retorno el objeto creado
+        return retorno;
     }
 }

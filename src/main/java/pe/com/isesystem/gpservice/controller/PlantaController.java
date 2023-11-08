@@ -24,6 +24,11 @@ public class PlantaController {
         return new ResponseEntity<>(plantaDtoList, HttpStatus.OK);
     }
 
+    @GetMapping("/getPlanta/{idPlanta}")
+    public ResPlantaWithDestino getAllPage(@PathVariable Long idPlanta){
+        return  plantaService.getPlanta(idPlanta);
+    }
+
     @PostMapping("/savePlanta")
     public ResponseEntity<Object> savePlanta(@RequestBody ResPlantaWithDestino resPlantaWithDestino){
         RespuestaHttp resp = new RespuestaHttp();
