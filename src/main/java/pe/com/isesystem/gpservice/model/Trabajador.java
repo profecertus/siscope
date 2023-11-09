@@ -43,7 +43,7 @@ public class Trabajador {
     private Banco idBanco;
 
     @Column(name = "CTA_BANCARIA", length = 40)
-    private Boolean ctaBancaria;
+    private String ctaBancaria;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.RESTRICT)
