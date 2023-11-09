@@ -14,6 +14,6 @@ public class EmpProveedorDto implements Serializable {
     private String nombre;
     private String apellidoPat;
     private String apellidoMat;
-    private String estadoReg;
+    private Boolean estadoReg;
 
 }

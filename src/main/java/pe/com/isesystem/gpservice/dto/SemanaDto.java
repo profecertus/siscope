@@ -16,5 +16,5 @@ public class SemanaDto implements Serializable {
     Long id;
     Long fechaInicio;
     Long fechaFin;
-    Boolean tipoSemana;
+    String tipoSemana;
 }

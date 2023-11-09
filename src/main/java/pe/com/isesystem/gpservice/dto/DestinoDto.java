@@ -13,6 +13,6 @@ public class DestinoDto implements Serializable {
     private Long idDestino;
     private String nombre;
     private String abreviatura;
-    private String estado;
-    private String estadoReg;
+    private Boolean estado;
+    private Boolean estadoReg;
 }

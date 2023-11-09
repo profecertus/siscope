@@ -14,6 +14,6 @@ public class CamaraDto  implements Serializable {
     private String marca;
     private String modelo;
     private ProveedorDto idProveedor;
-    private String estado;
-    private String estadoReg;
+    private Boolean estado;
+    private Boolean estadoReg;
 }

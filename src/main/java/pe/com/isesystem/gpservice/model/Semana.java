@@ -26,6 +26,6 @@ public class Semana {
     private Long fechaFin;
 
     @Column(name = "TIPO_SEMANA", nullable = false)
-    private Boolean tipoSemana = false;
+    private String tipoSemana;
 
 }

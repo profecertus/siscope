@@ -12,6 +12,6 @@ import java.io.Serializable;
 public class BancoDto  implements Serializable {
     private Long idBanco;
     private String nombreBanco;
-    private String estado;
-    private String estadoReg;
+    private Boolean estado;
+    private Boolean estadoReg;
 }

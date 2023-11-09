@@ -12,6 +12,6 @@ import java.io.Serializable;
 public class FormaPagoDto  implements Serializable {
     private Long idFormaPago;
     private String nombreFormaPago;
-    private String estado;
-    private String estadoReg;
+    private Boolean estado;
+    private Boolean estadoReg;
 }

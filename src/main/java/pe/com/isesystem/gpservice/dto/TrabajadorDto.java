@@ -19,6 +19,6 @@ public class TrabajadorDto  implements Serializable {
     private BancoDto idBanco;
     private String ctaBancaria;
     private MonedaDto idMoneda;
-    private String estado;
-    private String estadoReg;
+    private Boolean estado;
+    private Boolean estadoReg;
 }
