@@ -19,7 +19,6 @@ import pe.com.isesystem.gpservice.response.ResPlantaWithDestino;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PlantaService {
@@ -58,7 +57,7 @@ public class PlantaService {
     public Page<ResPlantaWithDestino> getAllPlanta(Pageable pageable) {
         List<ResPlantaWithDestino> retorno = new ArrayList<>();
 
-        Page<Planta> p = plantaRepository.findAllByEstadoAndEstadoRegOrderById(pageable, true, true);
+        Page<Planta> p = plantaRepository.findAllByEstadoRegOrderById(pageable, true);
 
         List<PlantaDto> contentPlantaDto = p.getContent().stream()
                 .map(this::mapPlantotoPlantaDto)

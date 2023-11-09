@@ -23,7 +23,7 @@ public class CamaraService {
     }
 
     public Page<CamaraDto> getPageCamara(Pageable pageable){
-        Page<Camara> pageCamara = camaraRepository.findAllByEstadoAndEstadoReg(pageable, true, true);
+        Page<Camara> pageCamara = camaraRepository.findAllByEstadoReg(pageable, true);
         List<CamaraDto> camaraDtoList = pageCamara.stream().map((element) -> modelMapper.map(element, CamaraDto.class)).collect(Collectors.toList());
         return new PageImpl<>(camaraDtoList, pageCamara.getPageable(), pageCamara.getTotalElements());
     }

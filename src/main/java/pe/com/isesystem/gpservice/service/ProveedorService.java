@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProveedorService {
-    private ProveedorRepository proveedorRepository;
-    private RelProvServRepository relProvServRepository;
-    private ModelMapper modelMapper;
+    private final ProveedorRepository proveedorRepository;
+    private final RelProvServRepository relProvServRepository;
+    private final ModelMapper modelMapper;
 
     public ProveedorService(ProveedorRepository proveedorRepository, ModelMapper modelMapper, RelProvServRepository relProvServRepository){
         this.proveedorRepository = proveedorRepository;
@@ -31,7 +31,7 @@ public class ProveedorService {
     }
 
     public List<ProveedorDto> getAllProveedor(Boolean estado, Boolean estadoReg){
-        List<Proveedor> proveedors = proveedorRepository.getAllByEstadoAndEstadoRegOrderById(estado, estadoReg);
+        List<Proveedor> proveedors = proveedorRepository.getAllByEstadoRegOrderById(estadoReg);
         List<ProveedorDto> proveedorsDtos = new ArrayList<>();
         if(!proveedors.isEmpty())
             for(Proveedor proveedor:proveedors){
@@ -49,18 +49,16 @@ public class ProveedorService {
     }
 
     public ProveedorDto mapProveedorToProveedorDto(Proveedor proveedor) {
-        ProveedorDto proveedorDto = this.modelMapper.map(proveedor, ProveedorDto.class);
-        // Realiza el mapeo de los atributos aquí
-        return proveedorDto;
+        return this.modelMapper.map(proveedor, ProveedorDto.class);
     }
 
     public Page<ResProveedorWithService> getAllPagesProveedorWithServicios(Pageable pageable){
-        List<ResProveedorWithService> retorno = new ArrayList<ResProveedorWithService>();
-        Page<Proveedor> p = proveedorRepository.findAllByEstadoAndEstadoRegOrderById(pageable, true, true);
+        List<ResProveedorWithService> retorno = new ArrayList<>();
+        Page<Proveedor> p = proveedorRepository.findAllByEstadoRegOrderById(pageable, true);
 
         List<ProveedorDto> contentProveedorDto = p.getContent().stream()
                 .map(this::mapProveedorToProveedorDto)
-                .collect(Collectors.toList());
+                .toList();
 
         for(ProveedorDto proveedor:contentProveedorDto){
             List<RelProvTiposerv> relProvTiposervs = relProvServRepository.findAllById_IdProveedor(proveedor.getId());
@@ -74,14 +72,12 @@ public class ProveedorService {
             retorno.add(new ResProveedorWithService(this.modelMapper.map(proveedor, ProveedorDto.class), lista ));
         }
 
-        Page<ResProveedorWithService> pageProveedorDto = new PageImpl<>(retorno, p.getPageable(), p.getTotalElements());
-
-        return pageProveedorDto;
+        return new PageImpl<>(retorno, p.getPageable(), p.getTotalElements());
     }
 
     public List<ResProveedorWithService> getAllProveedorWithServicios(Boolean estado, Boolean estadoReg){
-        List<Proveedor> proveedors = proveedorRepository.getAllByEstadoAndEstadoRegOrderById(estado, estadoReg);
-        List<ResProveedorWithService> retorno = new ArrayList<ResProveedorWithService>();
+        List<Proveedor> proveedors = proveedorRepository.getAllByEstadoRegOrderById(estadoReg);
+        List<ResProveedorWithService> retorno = new ArrayList<>();
         if(!proveedors.isEmpty()){
             for(Proveedor proveedor:proveedors){
                 List<RelProvTiposerv> relProvTiposervs = relProvServRepository.findAllById_IdProveedor(proveedor.getId());
@@ -101,7 +97,7 @@ public class ProveedorService {
     public ProveedorDto getById(Long id){
         Optional<Proveedor> proveedor = proveedorRepository.findById(id);
         if(proveedor.isPresent()){
-            Proveedor prov = proveedor.get();
+            //Proveedor prov = proveedor.get();
             return this.modelMapper.map(proveedor, ProveedorDto.class);
         }else{
             return null;
