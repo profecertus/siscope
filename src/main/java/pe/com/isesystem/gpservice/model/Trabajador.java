@@ -42,7 +42,7 @@ public class Trabajador {
     @JoinColumn(name = "ID_BANCO", nullable = false)
     private Banco idBanco;
 
-    @Column(name = "CTA_BANCARIA")
+    @Column(name = "CTA_BANCARIA", length = 40)
     private Boolean ctaBancaria;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -23,7 +23,7 @@ public class TrabajadorService {
     }
 
     public Page<TrabajadorDto> getAllTrabajador(Pageable pageable){
-        Page<Trabajador> p = trabajadorRepository.findAllByEstadoAndEstadoRegOrderById(pageable,  true);
+        Page<Trabajador> p = trabajadorRepository.findAllByEstadoRegOrderById(pageable,  true);
         List<TrabajadorDto> trabajadorDtoList = p.stream().
                 map((element) -> modelMapper.map(element, TrabajadorDto.class)).
                 collect(Collectors.toList());

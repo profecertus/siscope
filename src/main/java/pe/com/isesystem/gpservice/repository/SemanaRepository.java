@@ -5,16 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pe.com.isesystem.gpservice.model.Trabajador;
-import pe.com.isesystem.gpservice.model.TrabajadorId;
+import pe.com.isesystem.gpservice.model.Semana;
 
 @Repository
 @NonNullApi
-public interface TrabajadorRepository extends JpaRepository<Trabajador, TrabajadorId> {
-
-
-    Page<Trabajador> findAllByEstadoRegOrderById(Pageable pageable, Boolean estadoReg);
+public interface SemanaRepository extends JpaRepository<Semana, Long> {
 
     @Override
-    <S extends Trabajador> S save(S entity);
+    Page<Semana> findAll(Pageable pageable);
+
+    @Override
+    <S extends Semana> S save(S entity);
 }
