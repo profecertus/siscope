@@ -113,9 +113,11 @@ public class ProveedorService {
     @Transactional
     public void saveRelProvServ(List<TipoServicioDto> relProvTiposervDto, Long IdProveedor){
         if (!relProvTiposervDto.isEmpty()){
-            relProvServRepository.deleteAllById_IdProveedor(IdProveedor);
+            relProvServRepository.eliminarRelacionProvServ(IdProveedor);
             for(TipoServicioDto rel : relProvTiposervDto){
-                relProvServRepository.grabarRelacionProvServ(IdProveedor, rel.getId());
+                if(relProvServRepository.findAllById_IdProveedorAndOrId_IdTipoServicio( IdProveedor, rel.getId()) != 1){
+                    relProvServRepository.grabarRelacionProvServ(IdProveedor, rel.getId());
+                }
             }
         }
     }
