@@ -28,7 +28,7 @@ public class EmbarcacionService {
     }
 
     public Page<EmbarcacionDto> getAllEmbarcacion(Pageable pageable){
-        Page<Embarcacion> pageEmbarcacion = embarcacionRepository.findAllByEstadoAndEstadoRegOrderById(pageable, true, true);
+        Page<Embarcacion> pageEmbarcacion = embarcacionRepository.findAllByEstadoRegOrderById(pageable, true);
         List<EmbarcacionDto> listEmbarcacionDto = pageEmbarcacion.stream().toList().stream().map((element) -> modelMapper.map(element, EmbarcacionDto.class)).toList();
         //Obtengo los Proveedores de cada embarcacion
         List<EmbarcacionDto> relEmbarcacionDtoList =
