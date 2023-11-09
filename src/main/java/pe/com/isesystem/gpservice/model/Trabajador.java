@@ -42,6 +42,9 @@ public class Trabajador {
     @JoinColumn(name = "ID_BANCO", nullable = false)
     private Banco idBanco;
 
+    @Column(name = "CTA_BANCARIA")
+    private Boolean ctaBancaria;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "ID_MONEDA", nullable = false)

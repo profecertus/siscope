@@ -5,8 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import pe.com.isesystem.gpservice.dto.CamaraDto;
 import pe.com.isesystem.gpservice.dto.TrabajadorDto;
 import pe.com.isesystem.gpservice.model.Trabajador;
 import pe.com.isesystem.gpservice.repository.TrabajadorRepository;
@@ -25,7 +23,7 @@ public class TrabajadorService {
     }
 
     public Page<TrabajadorDto> getAllTrabajador(Pageable pageable){
-        Page<Trabajador> p = trabajadorRepository.findAllByEstadoAndEstadoRegOrderById(pageable, true, true);
+        Page<Trabajador> p = trabajadorRepository.findAllByEstadoAndEstadoRegOrderById(pageable,  true);
         List<TrabajadorDto> trabajadorDtoList = p.stream().
                 map((element) -> modelMapper.map(element, TrabajadorDto.class)).
                 collect(Collectors.toList());

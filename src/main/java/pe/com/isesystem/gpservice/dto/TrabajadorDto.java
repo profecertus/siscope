@@ -1,8 +1,6 @@
 package pe.com.isesystem.gpservice.dto;
 
 import lombok.*;
-import pe.com.isesystem.gpservice.model.Moneda;
-import pe.com.isesystem.gpservice.model.TipoDocumento;
 
 import java.io.Serializable;
 
@@ -19,6 +17,7 @@ public class TrabajadorDto  implements Serializable {
     private String apellidoMat;
     private FormaPagoDto idFormaPago;
     private BancoDto idBanco;
+    private String ctaBancaria;
     private MonedaDto idMoneda;
     private String estado;
     private String estadoReg;
