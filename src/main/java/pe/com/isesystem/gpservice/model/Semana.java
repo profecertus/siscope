@@ -28,4 +28,7 @@ public class Semana {
     @Column(name = "TIPO_SEMANA", nullable = false)
     private String tipoSemana;
 
+    @Column(name = "ESTADO", nullable = false)
+    private Boolean estado;
+
 }
