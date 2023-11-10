@@ -13,6 +13,7 @@ import pe.com.isesystem.gpservice.repository.EmbarcacionRepository;
 import pe.com.isesystem.gpservice.repository.RelEmbarcacionProveedorRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmbarcacionService {
@@ -41,6 +42,15 @@ public class EmbarcacionService {
                                     toList());
                         }).toList();
         return new PageImpl<>(relEmbarcacionDtoList, pageEmbarcacion.getPageable(), pageEmbarcacion.getTotalElements());
+    }
+
+    public EmbarcacionDto getEmbarcacion(Long idEmbarcacion){
+        Optional<Embarcacion> embarcacion =  embarcacionRepository.findById(idEmbarcacion);
+        EmbarcacionDto embarcacionDto = null;
+        if(embarcacion.isPresent()){
+            embarcacionDto = modelMapper.map(embarcacion.get(), EmbarcacionDto.class);
+        }
+        return embarcacionDto;
     }
 
     public EmbarcacionDto saveEmbarcacion(EmbarcacionDto embarcacionDto){

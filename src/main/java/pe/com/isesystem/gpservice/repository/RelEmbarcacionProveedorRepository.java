@@ -9,6 +9,7 @@ import pe.com.isesystem.gpservice.model.RelEmbarcacionProveedor;
 import pe.com.isesystem.gpservice.model.RelEmbarcacionProveedorId;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RelEmbarcacionProveedorRepository extends JpaRepository<RelEmbarcacionProveedor, RelEmbarcacionProveedorId> {
@@ -22,5 +23,6 @@ public interface RelEmbarcacionProveedorRepository extends JpaRepository<RelEmba
     @Modifying
     @Query(value = "DELETE FROM REL_EMBARCACION_PROVEEDOR WHERE ID_EMBARCACION = :idEmbarcacion AND ID_TIPO_SERVICIO = :idTipoServicio", nativeQuery = true)
     void eliminarRelEmbarcacionProveedor(@Param("idEmbarcacion") Long idEmbarcacion,  @Param("idTipoServicio") Long idTipoServicio);
+
 
 }

@@ -23,6 +23,12 @@ public class EmbarcacionController {
         return new ResponseEntity<>(respuesta, HttpStatus.OK);
     }
 
+    @GetMapping("/getEmbarcacion/{idEmbarcacion}")
+    public ResponseEntity<EmbarcacionDto> getAllEmbarcacion(@PathVariable Long idEmbarcacion){
+        EmbarcacionDto respuesta = embarcacionService.getEmbarcacion(idEmbarcacion);
+        return new ResponseEntity<>(respuesta, HttpStatus.OK);
+    }
+
     @PostMapping("/saveEmbarcacion")
     public ResponseEntity<EmbarcacionDto> saveEmbarcacion(@RequestBody EmbarcacionDto embarcacionDto){
         EmbarcacionDto emb = embarcacionService.saveEmbarcacion(embarcacionDto);
