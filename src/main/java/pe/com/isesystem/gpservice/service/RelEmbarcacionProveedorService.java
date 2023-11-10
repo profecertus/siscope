@@ -10,7 +10,7 @@ public class RelEmbarcacionProveedorService {
     RelEmbarcacionProveedorRepository relEmbarcacionProveedorRepository;
     ModelMapper modelMapper;
 
-    public RelEmbarcacionProveedorService(RelEmbarcacionProveedorService relEmbarcacionProveedorService, ModelMapper modelMapper){
+    public RelEmbarcacionProveedorService(RelEmbarcacionProveedorRepository relEmbarcacionProveedorRepository, ModelMapper modelMapper){
         this.relEmbarcacionProveedorRepository = relEmbarcacionProveedorRepository;
         this.modelMapper = modelMapper;
     }
