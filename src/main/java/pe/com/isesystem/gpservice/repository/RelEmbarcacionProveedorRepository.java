@@ -16,7 +16,7 @@ public interface RelEmbarcacionProveedorRepository extends JpaRepository<RelEmba
     List<RelEmbarcacionProveedor> findAllById_IdEmbarcacion(Long idEmbarcacion);
 
     @Modifying
-    @Query(value = "INSERT INTO REL_EMBARCACION_PROVEEDOR(ID_EMBARCACION, ID_PROVEEDOR, ID_TIPO_SERVICIO) VALUES(:idEmbarcacion, :idProveedor, :idTipoServicio)", nativeQuery = true)
+    @Query(value = "INSERT INTO REL_EMBARCACION_PROVEEDOR(ID_EMBARCACION, ID_PROOVEDOR, ID_TIPO_SERVICIO) VALUES(:idEmbarcacion, :idProveedor, :idTipoServicio)", nativeQuery = true)
     void grabarRelEmbarcacionProveedor(@Param("idEmbarcacion") Long idEmbarcacion, @Param("idProveedor") Long idProveedor, @Param("idTipoServicio") Long idTipoServicio);
 
     @Modifying

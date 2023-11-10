@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pe.com.isesystem.gpservice.configuration.RespuestaHttp;
 import pe.com.isesystem.gpservice.service.RelEmbarcacionProveedorService;
-import pe.com.isesystem.gpservice.service.RelPlantaProveedorService;
 
 @RestController
 @RequestMapping("/relembprov/v1")
