@@ -243,6 +243,25 @@ CREATE TABLE unidad_medida (
     estado_reg  BOOLEAN
 );
 
+CREATE TABLE tarifario_general (
+    id_proveedor     INTEGER NOT NULL,
+    id_tipo_servicio INTEGER NOT NULL,
+    id_anio          INTEGER NOT NULL,
+    id_moneda        INTEGER,
+    monto            NUMERIC(10, 2)
+);
+
+--  ERROR: FK name length exceeds maximum allowed length(30) 
+ALTER TABLE tarifario_general
+    ADD CONSTRAINT tarifario_general_rel_prov_tiposerv_fk FOREIGN KEY ( id_proveedor,
+                                                                        id_tipo_servicio )
+        REFERENCES rel_prov_tiposerv ( id_proveedor,
+                                       id_tipo_servicio );
+
+ALTER TABLE tarifario_general
+    ADD CONSTRAINT tarifario_general_semana_fk FOREIGN KEY ( id_anio )
+        REFERENCES semana ( id_anio );
+
 ALTER TABLE unidad_medida ADD CONSTRAINT unidad_medida_pk PRIMARY KEY ( id_um );
 
 ALTER TABLE camara
