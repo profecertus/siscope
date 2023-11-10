@@ -26,7 +26,7 @@ public interface RelProvServRepository extends JpaRepository<RelProvTiposerv, Re
     List<RelProvTiposerv> findAllById(Iterable<RelProvTiposervId> relProvTiposervIds);
 
     @Modifying
-    @Query(value = "INSERT INTO REL_PROV_TIPOSERV(ID_PROVEEDOR, ID_TIPO_SERVICIO, ESTADO, ESTADO_REG) VALUES(:idProveedor, :idServicio, 1, 1)", nativeQuery = true)
+    @Query(value = "INSERT INTO REL_PROV_TIPOSERV(ID_PROVEEDOR, ID_TIPO_SERVICIO, ESTADO, ESTADO_REG) VALUES(:idProveedor, :idServicio, true, true)", nativeQuery = true)
     void grabarRelacionProvServ(@Param("idProveedor") Long idProveedor, @Param("idServicio") Long idServicio);
 
 
