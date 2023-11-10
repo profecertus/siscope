@@ -10,8 +10,10 @@ spring:
   jpa:
     database: POSTGRESQL
     show-sql: true
+    hibernate:
+      ddl-auto: none
 
-  app:
-    ws:
-      version: 1
+app:
+  ws:
+    version: 1
 
