@@ -28,7 +28,7 @@ public class ProovedorController {
 
     @GetMapping("/getAll")
     public ResponseEntity<List<ProveedorDto>> getAll(){
-        List<ProveedorDto> proveedorDtoList =  proveedorService.getAllProveedor(true, true);
+        List<ProveedorDto> proveedorDtoList =  proveedorService.getAllProveedor(true);
         return new ResponseEntity<>(proveedorDtoList, HttpStatus.OK);
     }
 

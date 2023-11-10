@@ -30,7 +30,7 @@ public class ProveedorService {
         this.relProvServRepository = relProvServRepository;
     }
 
-    public List<ProveedorDto> getAllProveedor(Boolean estado, Boolean estadoReg){
+    public List<ProveedorDto> getAllProveedor(Boolean estadoReg){
         List<Proveedor> proveedors = proveedorRepository.getAllByEstadoRegOrderById(estadoReg);
         List<ProveedorDto> proveedorsDtos = new ArrayList<>();
         if(!proveedors.isEmpty())

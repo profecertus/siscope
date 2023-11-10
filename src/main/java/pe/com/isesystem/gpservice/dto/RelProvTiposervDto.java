@@ -16,6 +16,6 @@ public class RelProvTiposervDto implements Serializable {
     //RelProvTiposervIdDto id;
     ProveedorDto idProveedor;
     TipoServicioDto idTipoServicio;
-    //Boolean estado;
-    //Boolean estadoReg;
+    Boolean estado;
+    Boolean estadoReg;
 }
