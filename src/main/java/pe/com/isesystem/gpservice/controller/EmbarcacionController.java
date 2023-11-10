@@ -24,7 +24,7 @@ public class EmbarcacionController {
     }
 
     @GetMapping("/getEmbarcacion/{idEmbarcacion}")
-    public ResponseEntity<EmbarcacionDto> getAllEmbarcacion(@PathVariable Long idEmbarcacion){
+    public ResponseEntity<EmbarcacionDto> getEmbarcacion(@PathVariable Long idEmbarcacion){
         EmbarcacionDto respuesta = embarcacionService.getEmbarcacion(idEmbarcacion);
         return new ResponseEntity<>(respuesta, HttpStatus.OK);
     }
