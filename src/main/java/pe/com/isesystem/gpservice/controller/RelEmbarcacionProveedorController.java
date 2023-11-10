@@ -19,6 +19,8 @@ public class RelEmbarcacionProveedorController {
 
     @PostMapping("/actualizar/{idEmbarcacion}/{idProveedor}/{idTipoServicio}")
     public ResponseEntity<RespuestaHttp> actualizar(@PathVariable Long idEmbarcacion, @PathVariable Long idProveedor, @PathVariable Long idTipoServicio){
+        if(idProveedor == -1)
+            return new ResponseEntity<>(new RespuestaHttp(), HttpStatus.EXPECTATION_FAILED);
         relEmbarcacionProveedorService.actualizarEmbarcacionProveedor(idEmbarcacion, idProveedor, idTipoServicio);
         RespuestaHttp rpta = new RespuestaHttp();
         rpta.setValorDevuelto("Grabado");
