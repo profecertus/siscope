@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pe.com.isesystem.gpservice.configuration.RespuestaHttp;
+import pe.com.isesystem.gpservice.dto.EmbarcacionDto;
 import pe.com.isesystem.gpservice.service.RelEmbarcacionProveedorService;
 
 @RestController
@@ -18,12 +19,10 @@ public class RelEmbarcacionProveedorController {
     RelEmbarcacionProveedorService relEmbarcacionProveedorService;
 
     @PostMapping("/actualizar/{idEmbarcacion}/{idProveedor}/{idTipoServicio}")
-    public ResponseEntity<RespuestaHttp> actualizar(@PathVariable Long idEmbarcacion, @PathVariable Long idProveedor, @PathVariable Long idTipoServicio){
+    public ResponseEntity<EmbarcacionDto> actualizar(@PathVariable Long idEmbarcacion, @PathVariable Long idProveedor, @PathVariable Long idTipoServicio){
         if(idProveedor == -1)
-            return new ResponseEntity<>(new RespuestaHttp(), HttpStatus.EXPECTATION_FAILED);
-        relEmbarcacionProveedorService.actualizarEmbarcacionProveedor(idEmbarcacion, idProveedor, idTipoServicio);
-        RespuestaHttp rpta = new RespuestaHttp();
-        rpta.setValorDevuelto("Grabado");
-        return new ResponseEntity<>(rpta, HttpStatus.OK);
+            return new ResponseEntity<>(new EmbarcacionDto(), HttpStatus.FAILED_DEPENDENCY);
+        EmbarcacionDto e = relEmbarcacionProveedorService.actualizarEmbarcacionProveedor(idEmbarcacion, idProveedor, idTipoServicio);
+        return new ResponseEntity<>(e, HttpStatus.OK);
     }
 }
