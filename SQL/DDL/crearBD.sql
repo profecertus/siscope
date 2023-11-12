@@ -164,7 +164,8 @@ CREATE TABLE semana (
     id_anio      INTEGER NOT NULL,
     fecha_inicio INTEGER NOT NULL,
     fecha_fin    INTEGER NOT NULL,
-    tipo_semana  CHAR(1) NOT NULL
+    tipo_semana  CHAR(1) NOT NULL,
+    estado       BOOLEAN
 );
 
 ALTER TABLE semana ADD CONSTRAINT semana_pk PRIMARY KEY ( id_anio );
@@ -248,8 +249,12 @@ CREATE TABLE tarifario_general (
     id_tipo_servicio INTEGER NOT NULL,
     id_anio          INTEGER NOT NULL,
     id_moneda        INTEGER,
-    monto            NUMERIC(10, 2)
+    monto            NUMERIC(10, 2),
+    estado           BOOLEAN,
+    estado_reg       BOOLEAN
 );
+
+ALTER TABLE tarifario_general ADD CONSTRAINT tarifario_general_pk PRIMARY KEY ( id_proveedor, id_tipo_servicio, id_anio );
 
 --  ERROR: FK name length exceeds maximum allowed length(30) 
 ALTER TABLE tarifario_general
@@ -261,6 +266,7 @@ ALTER TABLE tarifario_general
 ALTER TABLE tarifario_general
     ADD CONSTRAINT tarifario_general_semana_fk FOREIGN KEY ( id_anio )
         REFERENCES semana ( id_anio );
+        
 
 ALTER TABLE unidad_medida ADD CONSTRAINT unidad_medida_pk PRIMARY KEY ( id_um );
 
