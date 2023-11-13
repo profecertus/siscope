@@ -257,11 +257,11 @@ CREATE TABLE tarifario_general (
 ALTER TABLE tarifario_general ADD CONSTRAINT tarifario_general_pk PRIMARY KEY ( id_proveedor, id_tipo_servicio, id_anio );
 
 --  ERROR: FK name length exceeds maximum allowed length(30) 
-ALTER TABLE tarifario_general
-    ADD CONSTRAINT tarifario_general_rel_prov_tiposerv_fk FOREIGN KEY ( id_proveedor,
-                                                                        id_tipo_servicio )
-        REFERENCES rel_prov_tiposerv ( id_proveedor,
-                                       id_tipo_servicio );
+--ALTER TABLE tarifario_general
+--    ADD CONSTRAINT tarifario_general_rel_prov_tiposerv_fk FOREIGN KEY ( id_proveedor,
+--                                                                        id_tipo_servicio )
+--        REFERENCES rel_prov_tiposerv ( id_proveedor,
+--                                       id_tipo_servicio );
 
 ALTER TABLE tarifario_general
     ADD CONSTRAINT tarifario_general_semana_fk FOREIGN KEY ( id_anio )

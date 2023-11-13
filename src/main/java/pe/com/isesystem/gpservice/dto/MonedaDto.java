@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class MonedaDto implements Serializable {
-    Long id;
+    Long idMoneda;
     String nombre;
     String abreviatura;
 }
