@@ -121,7 +121,7 @@ public class ProveedorService {
             for(TipoServicioDto rel : relProvTiposervDto){
                 if(relProvServRepository.findAllById_IdProveedorAndOrId_IdTipoServicio( IdProveedor, rel.getId()) != 1){
                     relProvServRepository.grabarRelacionProvServ(IdProveedor, rel.getId());
-                    tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId(), 20231114L);
+                    tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
                 }
             }
         }
