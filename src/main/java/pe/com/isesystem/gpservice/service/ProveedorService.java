@@ -13,6 +13,7 @@ import pe.com.isesystem.gpservice.model.Proveedor;
 import pe.com.isesystem.gpservice.model.RelProvTiposerv;
 import pe.com.isesystem.gpservice.repository.ProveedorRepository;
 import pe.com.isesystem.gpservice.repository.RelProvServRepository;
+import pe.com.isesystem.gpservice.repository.TarifarioGeneralRepository;
 import pe.com.isesystem.gpservice.response.ResProveedorWithService;
 
 import java.util.*;
@@ -23,11 +24,14 @@ public class ProveedorService {
     private final ProveedorRepository proveedorRepository;
     private final RelProvServRepository relProvServRepository;
     private final ModelMapper modelMapper;
+    private final TarifarioGeneralRepository tarifarioGeneralRepository;
 
-    public ProveedorService(ProveedorRepository proveedorRepository, ModelMapper modelMapper, RelProvServRepository relProvServRepository){
+    public ProveedorService(ProveedorRepository proveedorRepository, ModelMapper modelMapper, RelProvServRepository relProvServRepository,
+                            TarifarioGeneralRepository tarifarioGeneralRepository ){
         this.proveedorRepository = proveedorRepository;
         this.modelMapper = modelMapper;
         this.relProvServRepository = relProvServRepository;
+        this.tarifarioGeneralRepository = tarifarioGeneralRepository;
     }
 
     public List<ProveedorDto> getAllProveedor(Boolean estadoReg){
@@ -117,6 +121,7 @@ public class ProveedorService {
             for(TipoServicioDto rel : relProvTiposervDto){
                 if(relProvServRepository.findAllById_IdProveedorAndOrId_IdTipoServicio( IdProveedor, rel.getId()) != 1){
                     relProvServRepository.grabarRelacionProvServ(IdProveedor, rel.getId());
+                    tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId(), 20231114L);
                 }
             }
         }
