@@ -11,6 +11,7 @@ import pe.com.isesystem.gpservice.dto.RelProvTiposervDto;
 import pe.com.isesystem.gpservice.dto.TipoServicioDto;
 import pe.com.isesystem.gpservice.model.Proveedor;
 import pe.com.isesystem.gpservice.model.RelProvTiposerv;
+import pe.com.isesystem.gpservice.model.TipoServicio;
 import pe.com.isesystem.gpservice.repository.ProveedorRepository;
 import pe.com.isesystem.gpservice.repository.RelProvServRepository;
 import pe.com.isesystem.gpservice.repository.TarifarioGeneralRepository;
@@ -25,13 +26,15 @@ public class ProveedorService {
     private final RelProvServRepository relProvServRepository;
     private final ModelMapper modelMapper;
     private final TarifarioGeneralRepository tarifarioGeneralRepository;
+    private final TipoServicioService tipoServicioService;
 
     public ProveedorService(ProveedorRepository proveedorRepository, ModelMapper modelMapper, RelProvServRepository relProvServRepository,
-                            TarifarioGeneralRepository tarifarioGeneralRepository ){
+                            TarifarioGeneralRepository tarifarioGeneralRepository, TipoServicioService tipoServicioService ){
         this.proveedorRepository = proveedorRepository;
         this.modelMapper = modelMapper;
         this.relProvServRepository = relProvServRepository;
         this.tarifarioGeneralRepository = tarifarioGeneralRepository;
+        this.tipoServicioService = tipoServicioService;
     }
 
     public List<ProveedorDto> getAllProveedor(Boolean estadoReg){
@@ -116,12 +119,16 @@ public class ProveedorService {
 
     @Transactional
     public void saveRelProvServ(List<TipoServicioDto> relProvTiposervDto, Long IdProveedor){
+        TipoServicioDto tsDto;
         if (!relProvTiposervDto.isEmpty()){
             relProvServRepository.eliminarRelacionProvServ(IdProveedor);
             for(TipoServicioDto rel : relProvTiposervDto){
                 if(relProvServRepository.findAllById_IdProveedorAndOrId_IdTipoServicio( IdProveedor, rel.getId()) != 1){
                     relProvServRepository.grabarRelacionProvServ(IdProveedor, rel.getId());
-                    tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
+                    //Aca debo capturar que tipo es para poder enviarlo a uno u otro tarifario.
+                    tsDto = this.tipoServicioService.getTipoServicio(rel.getId());
+                    if (tsDto.getId().equals(1L))
+                        tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
                 }
             }
         }

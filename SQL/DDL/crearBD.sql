@@ -198,6 +198,7 @@ ALTER TABLE tipo_documento ADD CONSTRAINT tipo_documento_pk PRIMARY KEY ( id_tip
 
 CREATE TABLE tipo_servicio (
     id_tipo_servicio INTEGER NOT NULL,
+    tipo_tarifa      INTEGER,
     nombre           VARCHAR(100) NOT NULL,
     id_um            INTEGER NOT NULL,
     estado           BOOLEAN,

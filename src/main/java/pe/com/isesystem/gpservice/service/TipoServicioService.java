@@ -6,8 +6,10 @@ import pe.com.isesystem.gpservice.dto.TipoServicioDto;
 import pe.com.isesystem.gpservice.model.TipoServicio;
 import pe.com.isesystem.gpservice.repository.TipoServicioRepository;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TipoServicioService {
@@ -26,6 +28,15 @@ public class TipoServicioService {
             for(TipoServicio tipoServicio:tipoServicios)
                 tipoServicioDtos.add( this.modelMapper.map(tipoServicio, TipoServicioDto.class) );
         return tipoServicioDtos;
+    }
+
+    public TipoServicioDto getTipoServicio(Long idTipoServicio){
+        Optional<TipoServicio> ts = this.tipoServicioRepository.findById(idTipoServicio);
+        TipoServicioDto tsDto = new TipoServicioDto();
+        if(ts.isPresent()){
+            tsDto = modelMapper.map(ts.get(), TipoServicioDto.class);
+        }
+        return tsDto;
     }
 
 }
