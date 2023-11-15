@@ -231,6 +231,9 @@ CREATE TABLE ubigeo (
     departamento VARCHAR(50),
     provincia    VARCHAR(50),
     distrito     VARCHAR(50),
+    superficie   NUMERIC(10, 4),
+    posx         NUMERIC(10,4),
+    posy         NUMERIC(10, 4),
     estado_reg   BOOLEAN
 );
 
