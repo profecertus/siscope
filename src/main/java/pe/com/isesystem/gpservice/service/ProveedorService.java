@@ -127,8 +127,18 @@ public class ProveedorService {
                     relProvServRepository.grabarRelacionProvServ(IdProveedor, rel.getId());
                     //Aca debo capturar que tipo es para poder enviarlo a uno u otro tarifario.
                     tsDto = this.tipoServicioService.getTipoServicio(rel.getId());
-                    if (tsDto.getId().equals(1L))
+
+                    if (tsDto.getTipoTarifa() == 1) {
                         tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
+                    } else if (tsDto.getTipoTarifa() == 2) {
+                        tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
+                    } else if (tsDto.getTipoTarifa() == 3) {
+                        tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
+                    } else if (tsDto.getTipoTarifa() == 4) {
+                        tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
+                    } else {
+                        tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
+                    }
                 }
             }
         }

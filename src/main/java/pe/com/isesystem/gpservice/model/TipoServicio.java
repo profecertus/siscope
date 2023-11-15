@@ -18,6 +18,9 @@ public class TipoServicio {
     @Column(name = "ID_TIPO_SERVICIO", nullable = false)
     private Long id;
 
+    @Column(name = "TIPO_TARIFA", nullable = false)
+    private Long tipoTarifa;
+
     @Column(name = "NOMBRE", nullable = false, length = 100)
     private String nombre;
 

@@ -15,6 +15,7 @@ import java.io.Serializable;
 @Setter
 public class TipoServicioDto implements Serializable {
     Long id;
+    Long tipoTarifa;
     String nombre;
     UnidadMedidaDto idUm;
     Boolean estado;
