@@ -34,6 +34,10 @@ public class EmbarcacionService {
         this.proveedorRepository = proveedorRepository;
     }
 
+    public Long getFecha(){
+        return proveedorRepository.getFecha();
+    }
+
     public Page<EmbarcacionDto> getAllEmbarcacion(Pageable pageable){
         Page<Embarcacion> pageEmbarcacion = embarcacionRepository.findAllByEstadoRegOrderById(pageable, true);
         List<EmbarcacionDto> listEmbarcacionDto = pageEmbarcacion.stream().toList().stream().map((element) -> modelMapper.map(element, EmbarcacionDto.class)).toList();

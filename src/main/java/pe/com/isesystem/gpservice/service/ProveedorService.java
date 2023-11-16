@@ -130,7 +130,7 @@ public class ProveedorService {
 
                     if (tsDto.getTipoTarifa() == 1) {
                         tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
-                    } else if (tsDto.getTipoTarifa() == 2) {
+                    } /*else if (tsDto.getTipoTarifa() == 2) {
                         tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
                     } else if (tsDto.getTipoTarifa() == 3) {
                         tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
@@ -138,7 +138,7 @@ public class ProveedorService {
                         tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
                     } else {
                         tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
-                    }
+                    }*/
                 }
             }
         }
