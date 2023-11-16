@@ -17,21 +17,24 @@ public class TarifarioGeneral {
     @EmbeddedId
     private TarifarioGeneralId id;
 
-    @MapsId("id")
+    @MapsId("idDia")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumns({
-            @JoinColumn(name = "id_proveedor", referencedColumnName = "id_proveedor", nullable = false),
-            @JoinColumn(name = "id_tipo_servicio", referencedColumnName = "id_tipo_servicio", nullable = false)
-    })
-    private RelProvTiposerv relProvTiposerv;
+    @JoinColumn(name = "id_dia", nullable = false)
+    private DiaSemana idDia;
 
-    @MapsId("idAnio")
+    @MapsId("idProveedor")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_anio", nullable = false)
-    private Semana idAnio;
+    @JoinColumn(name = "id_proveedor", nullable = false)
+    private Proveedor idProveedor;
 
-    @Column(name = "id_moneda")
-    private Integer idMoneda;
+    @MapsId("idTipoServicio")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_tipo_servicio", nullable = false)
+    private TipoServicio idTipoServicio;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_moneda", nullable = false)
+    private Moneda idMoneda;
 
     @Column(name = "monto", precision = 10, scale = 2)
     private BigDecimal monto;

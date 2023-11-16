@@ -16,7 +16,7 @@ DECLARE
 BEGIN 
     FOR current_table IN (SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE') 
     LOOP 
-        EXECUTE 'GRANT SELECT, INSERT, UPDATE ON TABLE ' || current_table || ' TO "siscope-main";';
+        EXECUTE 'GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ' || current_table || ' TO "siscope-main";';
     END LOOP;
 END $$;
 
