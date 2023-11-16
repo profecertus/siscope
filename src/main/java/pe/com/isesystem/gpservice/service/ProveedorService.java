@@ -27,14 +27,17 @@ public class ProveedorService {
     private final ModelMapper modelMapper;
     private final TarifarioGeneralRepository tarifarioGeneralRepository;
     private final TipoServicioService tipoServicioService;
+    private final EmbarcacionService embarcacionService;
 
     public ProveedorService(ProveedorRepository proveedorRepository, ModelMapper modelMapper, RelProvServRepository relProvServRepository,
-                            TarifarioGeneralRepository tarifarioGeneralRepository, TipoServicioService tipoServicioService ){
+                            TarifarioGeneralRepository tarifarioGeneralRepository, TipoServicioService tipoServicioService,
+                            EmbarcacionService embarcacionService){
         this.proveedorRepository = proveedorRepository;
         this.modelMapper = modelMapper;
         this.relProvServRepository = relProvServRepository;
         this.tarifarioGeneralRepository = tarifarioGeneralRepository;
         this.tipoServicioService = tipoServicioService;
+        this.embarcacionService = embarcacionService;
     }
 
     public List<ProveedorDto> getAllProveedor(Boolean estadoReg){
@@ -120,6 +123,7 @@ public class ProveedorService {
     @Transactional
     public void saveRelProvServ(List<TipoServicioDto> relProvTiposervDto, Long IdProveedor){
         TipoServicioDto tsDto;
+        List<Long> lista = new ArrayList<>();
         if (!relProvTiposervDto.isEmpty()){
             relProvServRepository.eliminarRelacionProvServ(IdProveedor);
             for(TipoServicioDto rel : relProvTiposervDto){
@@ -127,20 +131,16 @@ public class ProveedorService {
                     relProvServRepository.grabarRelacionProvServ(IdProveedor, rel.getId());
                     //Aca debo capturar que tipo es para poder enviarlo a uno u otro tarifario.
                     tsDto = this.tipoServicioService.getTipoServicio(rel.getId());
-
                     if (tsDto.getTipoTarifa() == 1) {
-                        tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
-                    } /*else if (tsDto.getTipoTarifa() == 2) {
-                        tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
-                    } else if (tsDto.getTipoTarifa() == 3) {
-                        tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
-                    } else if (tsDto.getTipoTarifa() == 4) {
-                        tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
-                    } else {
-                        tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
-                    }*/
+                        lista.add(rel.getId());
+                        if (!tarifarioGeneralRepository.
+                                findById_IdProveedorAndId_IdTipoServicio(IdProveedor, rel.getId()).isPresent()){
+                            tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
+                        }
+                    }
                 }
             }
+            tarifarioGeneralRepository.eliminaNoEstan(lista, IdProveedor, this.embarcacionService.getFecha() );
         }
     }
 
