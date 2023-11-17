@@ -28,7 +28,7 @@ public interface TarifarioPlantaRepository extends JpaRepository<TarifarioPlanta
     @Query(value = "DELETE FROM TARIFARIO_PLANTA " +
             " WHERE id_planta = :idPlanta AND " +
             " id_proveedor = :idProveedor AND " +
-            " id_tipo_servicio = :idServicio ", nativeQuery = true)
+            " id_tipo_servicio = :idTipoServicio ", nativeQuery = true)
     void eliminarTarifarioPlanta(@Param("idPlanta") Long idPlanta,
                                  @Param("idProveedor") Long idProveedor,
                                  @Param("idTipoServicio") Long idTipoServicio);
