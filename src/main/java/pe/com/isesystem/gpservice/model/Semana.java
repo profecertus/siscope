@@ -16,7 +16,7 @@ import lombok.*;
 @Table(name = "SEMANA")
 public class Semana {
     @Id
-    @Column(name = "ID_ANIO", nullable = false)
+    @Column(name = "ID_SEMANA", nullable = false)
     private Long id;
 
     @Column(name = "FECHA_INICIO", nullable = false)

@@ -12,15 +12,17 @@ import pe.com.isesystem.gpservice.repository.SemanaRepository;
 @Service
 public class SemanaService  {
     SemanaRepository semanaRepository;
+    EmbarcacionService embarcacionService;
     ModelMapper modelMapper;
 
-    public SemanaService(SemanaRepository semanaRepository, ModelMapper modelMapper){
+    public SemanaService(SemanaRepository semanaRepository, ModelMapper modelMapper, EmbarcacionService embarcacionService){
         this.semanaRepository = semanaRepository;
         this.modelMapper = modelMapper;
+        this.embarcacionService = embarcacionService;
     }
 
     public Page<SemanaDto> getAll(Pageable pageable){
-        Page<Semana> s = semanaRepository.findAll(pageable);
+        Page<Semana> s = semanaRepository.findAllId(pageable, this.embarcacionService.getFecha() );
         return new PageImpl<>(s.stream().map((element) -> modelMapper.map(element, SemanaDto.class)).toList(),
                 s.getPageable(), s.getTotalElements());
 
