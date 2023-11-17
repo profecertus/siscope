@@ -22,7 +22,6 @@ public class SemanaService  {
     }
 
     public Page<SemanaDto> getAll(Pageable pageable){
-        System.out.println(this.embarcacionService.getFecha());
         Page<Semana> s = semanaRepository.findAllId(pageable, this.embarcacionService.getFecha() );
         return new PageImpl<>(s.stream().map((element) -> modelMapper.map(element, SemanaDto.class)).toList(),
                 s.getPageable(), s.getTotalElements());
