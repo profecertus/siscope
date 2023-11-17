@@ -13,7 +13,7 @@ import pe.com.isesystem.gpservice.model.Semana;
 @NonNullApi
 public interface SemanaRepository extends JpaRepository<Semana, Long> {
 
-    @Query(value = "SELECT * FROM SEMANA WHERE id_semana <= :semana", nativeQuery = true)
+    @Query(value = "SELECT * FROM SEMANA WHERE id_semana <= :semana order by id_semana DESC", nativeQuery = true)
     Page<Semana> findAllId(Pageable pageable, @PathVariable("semana") Long semana);
 
 
