@@ -20,7 +20,7 @@ public class Planta {
     private Long id;
 
     @Column(name = "NOMBRE", length = 80)
-    private String nombre;
+    private String nombrePlanta;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.RESTRICT)
