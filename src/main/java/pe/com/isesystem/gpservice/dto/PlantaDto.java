@@ -12,7 +12,6 @@ import java.io.Serializable;
 public class PlantaDto  implements Serializable {
     private Long idPlanta;
     private String nombrePlanta;
-    private ClienteDto ruc;
     private String direccion;
     private UbigeoDto codUbigeo;
     private Boolean estado;

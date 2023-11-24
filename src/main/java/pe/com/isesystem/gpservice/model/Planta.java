@@ -22,11 +22,6 @@ public class Planta {
     @Column(name = "NOMBRE", length = 80)
     private String nombrePlanta;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "RUC")
-    private Cliente ruc;
-
     @Column(name = "DIRECCION", length = 100)
     private String direccion;
 

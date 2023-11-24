@@ -1,3 +1,5 @@
+CREATE DATABASE SISCOPE_PRD;
+
 CREATE TABLE banco (
     id_banco     INTEGER NOT NULL,
     nombre_banco VARCHAR(70),
@@ -260,10 +262,6 @@ comment on table public.dia_semana is 'Realización de dia de semana';
 
 comment on column public.dia_semana.id_dia is 'Id del dia AAAAMMDD';
 
-alter table dia_semana
-    add constraint dia_semana_semana_id_semana_fk
-        foreign key (id_semana) references semana;
-
 CREATE TABLE tarifario_general (
     id_proveedor     INTEGER NOT NULL,
     id_tipo_servicio INTEGER NOT NULL,
@@ -273,6 +271,67 @@ CREATE TABLE tarifario_general (
     estado           BOOLEAN,
     estado_reg       BOOLEAN
 );
+
+
+create table tarifario_camara
+(
+    cod_ubigeo  varchar(10),
+    placa      char(10),
+    id_dia     integer
+        constraint tarifario_camara_dia_semana_id_dia_fk
+            references dia_semana,
+    id_moneda  integer,
+    monto      numeric(10, 2),
+    estado     boolean,
+    estado_reg boolean,
+    constraint tarifario_camara_pk
+        primary key (id_dia, cod_ubigeo, placa)
+);
+
+CREATE TABLE IF NOT EXISTS public.tarifario_embarcacion
+(
+    id_dia integer NOT NULL,
+    id_embarcacion integer NOT NULL,
+    id_proveedor integer NOT NULL,
+    id_tipo_servicio integer NOT NULL,
+    id_moneda integer,
+    monto numeric(10,2),
+    estado boolean,
+    estado_reg boolean,
+    CONSTRAINT tarifario_embarcacion_pk PRIMARY KEY (id_dia, id_tipo_servicio, id_proveedor, id_embarcacion),
+    CONSTRAINT tarifario_embarcacion_dia_semana_id_dia_fk FOREIGN KEY (id_dia)
+        REFERENCES public.dia_semana (id_dia) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+
+CREATE TABLE IF NOT EXISTS public.tarifario_planta
+(
+    id_dia integer NOT NULL,
+    id_planta integer NOT NULL,
+    id_proveedor integer NOT NULL,
+    id_tipo_servicio integer NOT NULL,
+    id_moneda integer,
+    monto numeric(10,2),
+    estado boolean,
+    estado_reg boolean,
+    CONSTRAINT tarifario_planta_pk PRIMARY KEY (id_dia, id_planta, id_proveedor, id_tipo_servicio),
+    CONSTRAINT tarifario_planta_dia_semana_id_dia_fk FOREIGN KEY (id_dia)
+        REFERENCES public.dia_semana (id_dia) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+GRANT UPDATE, DELETE, INSERT, SELECT ON TABLE public.tarifario_planta TO "siscope-dev";
+
+GRANT UPDATE, SELECT, INSERT, DELETE ON TABLE public.tarifario_planta TO "siscope-main";
+
+GRANT UPDATE, INSERT, SELECT ON TABLE public.tarifario_planta TO "siscope-tarifario";
+
+COMMENT ON COLUMN public.tarifario_planta.id_dia
+    IS 'El dia de la tarifa';
+
 
 ALTER TABLE tarifario_general ADD CONSTRAINT tarifario_general_pk PRIMARY KEY ( id_proveedor, id_tipo_servicio, id_dia );
 
