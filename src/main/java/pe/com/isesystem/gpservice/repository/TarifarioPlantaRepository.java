@@ -12,7 +12,7 @@ public interface TarifarioPlantaRepository extends JpaRepository<TarifarioPlanta
     @Modifying
     @Query(value = "INSERT INTO TARIFARIO_PLANTA (id_dia, id_planta, id_proveedor, id_tipo_servicio, " +
             "id_moneda, monto, estado, estado_reg) " +
-            "SELECT CAST(TO_CHAR(current_date AT TIME ZONE 'America/Lima', 'YYYYMMDD') AS NUMERIC), :idPlanta, " +
+            "SELECT CAST(TO_CHAR(current_date, 'YYYYMMDD') AS NUMERIC), :idPlanta, " +
             ":idProveedor, :idTipoServicio, 1, 0, true, true FROM DUAL",nativeQuery = true)
     void  insertTarifarioPlanta(@Param("idPlanta") Long idPlanta,
                                 @Param("idProveedor") Long idProveedor,

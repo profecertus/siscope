@@ -21,7 +21,7 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Long> {
 
     Page<Proveedor> findAllByEstadoRegOrderById (Pageable pageable, Boolean estadoReg);
 
-    @Query(value = "SELECT CAST(TO_CHAR( CURRENT_TIMESTAMP AT TIME ZONE 'America/Lima', 'YYYYMMDD') AS NUMERIC )", nativeQuery = true)
+    @Query(value = "SELECT CAST(TO_CHAR( CURRENT_TIMESTAMP, 'YYYYMMDD') AS NUMERIC )", nativeQuery = true)
     Long getFecha();
 
     @Override

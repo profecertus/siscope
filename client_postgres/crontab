@@ -1,0 +1,1 @@
+0 5 * * * docker run --rm -v /root/client_postgres:/docker-entrypoint-initdb.d  siscope-cron psql -f /docker-entrypoint-initdb.d/mi_archivo.sql >> /root/client_postgres/salida.csv
