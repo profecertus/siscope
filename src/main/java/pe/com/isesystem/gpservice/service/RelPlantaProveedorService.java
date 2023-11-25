@@ -23,10 +23,13 @@ public class RelPlantaProveedorService {
     @Transactional
     public void actualizarPlantaProveedor(Long idPlanta,  Long idProveedor, Long idTipoServicio){
         Long idMiProveedor = this.tarifarioPlantaRepository.existe(idPlanta, idTipoServicio);
-        if (  idMiProveedor == 0 || idMiProveedor != idProveedor )
-            this.tarifarioPlantaRepository.insertTarifarioPlanta(idPlanta, idProveedor, idTipoServicio);
-        if (idProveedor != idMiProveedor)
+        if (idProveedor != idMiProveedor){
             this.tarifarioPlantaRepository.eliminarTarifarioPlanta(idPlanta, idMiProveedor, idTipoServicio);
+        }
+        if (  idMiProveedor == 0 || idMiProveedor != idProveedor ){
+            this.tarifarioPlantaRepository.insertTarifarioPlanta(idPlanta, idProveedor, idTipoServicio);
+        }
+        //Ahora grabo la Relacion Proveedor
         this.relPlantaProveedorRepository.eliminarRelPlantaProveedor(idPlanta, idTipoServicio);
         this.relPlantaProveedorRepository.grabarRelPlantaProveedor(idPlanta, idProveedor, idTipoServicio);
     }
