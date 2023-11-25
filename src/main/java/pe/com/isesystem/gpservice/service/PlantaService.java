@@ -53,6 +53,15 @@ public class PlantaService {
             Destino destino = this.modelMapper.map(destinoDto, Destino.class);
             this.relPlantaDestinoRepository.grabarRelPlantaDestino(idPlanta,destino.getId());
         }
+
+        //Ahora verifico los clientes
+        this.relPlantaClienteRepository.deleteAllById_IdPlanta(idPlanta);
+        //Ahora grabo la lista de clientes
+        for( ClienteDto clienteDto : resPlantaWithDestino.getRelCliente() ){
+            //Aca tengo los clientes ahora lo envio a grabar en Rel_Planta_Cliente
+            this.relPlantaClienteRepository.grabar(idPlanta, clienteDto.getRuc());
+        }
+
         return idPlanta.toString();
     }
     public Page<ResPlantaWithDestino> getAllPlanta(Pageable pageable) {
