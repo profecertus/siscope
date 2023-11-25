@@ -21,7 +21,7 @@ public class RelPlantaClienteId implements Serializable {
     private String ruc;
 
     @Column(name = "id_planta", nullable = false)
-    private Integer idPlanta;
+    private Long idPlanta;
 
     @Override
     public boolean equals(Object o) {

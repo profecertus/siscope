@@ -19,7 +19,7 @@ public class Cliente {
     @Column(name = "RUC", nullable = false, length = 11)
     private String ruc;
 
-    @Column(name = "NOMBRE", length = 100)
+    @Column(name = "NOMBRE", length = 50)
     private String nombre;
 
 }

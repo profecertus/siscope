@@ -84,7 +84,9 @@ public class PlantaService {
             List<ClienteDto> relClienteDtoList =
                     this.relPlantaClienteRepository.
                             findAllById_IdPlanta(planta.getIdPlanta()).
-                            stream().map((element) -> modelMapper.map(element, ClienteDto.class)).
+                            stream().map((element) -> {
+                                return modelMapper.map(element.getRuc(), ClienteDto.class);
+                            }).
                             toList();
 
             //Los encapsulo en la respuesta

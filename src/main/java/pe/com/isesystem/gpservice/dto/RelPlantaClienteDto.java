@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class RelPlantaClienteDto {
+public class RelPlantaClienteDto implements Serializable {
     private RelPlantaClienteIdDto id;
     private ClienteDto ruc;
 }

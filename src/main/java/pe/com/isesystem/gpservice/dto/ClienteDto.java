@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class ClienteDto  implements Serializable {
     private String ruc;
     private String nombre;
+
     @Getter(value = AccessLevel.NONE)
     private String cliente;
 
