@@ -6,12 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pe.com.isesystem.gpservice.dto.DestinoDto;
-import pe.com.isesystem.gpservice.dto.PlantaDto;
-import pe.com.isesystem.gpservice.dto.RelPlantaDestinoDto;
-import pe.com.isesystem.gpservice.dto.RelPlantaProveedorDto;
+import pe.com.isesystem.gpservice.dto.*;
 import pe.com.isesystem.gpservice.model.*;
 import pe.com.isesystem.gpservice.repository.PlantaRepository;
+import pe.com.isesystem.gpservice.repository.RelPlantaClienteRepository;
 import pe.com.isesystem.gpservice.repository.RelPlantaDestinoRepository;
 import pe.com.isesystem.gpservice.repository.RelPlantaProveedorRepository;
 import pe.com.isesystem.gpservice.response.ResPlantaWithDestino;
@@ -26,14 +24,17 @@ public class PlantaService {
     private final ModelMapper modelMapper;
     private final RelPlantaDestinoRepository relPlantaDestinoRepository;
     private final RelPlantaProveedorRepository relPlantaProveedorRepository;
+    private final RelPlantaClienteRepository relPlantaClienteRepository;
 
     public PlantaService(PlantaRepository plantaRepository, ModelMapper modelMapper,
                          RelPlantaDestinoRepository relPlantaDestinoRepository,
-                         RelPlantaProveedorRepository relPlantaProveedorRepository){
+                         RelPlantaProveedorRepository relPlantaProveedorRepository,
+                         RelPlantaClienteRepository relPlantaClienteRepository){
         this.plantaRepository = plantaRepository;
         this.modelMapper = modelMapper;
         this.relPlantaDestinoRepository = relPlantaDestinoRepository;
         this.relPlantaProveedorRepository = relPlantaProveedorRepository;
+        this.relPlantaClienteRepository = relPlantaClienteRepository;
     }
 
     public PlantaDto mapPlantotoPlantaDto(Planta planta) {
@@ -79,12 +80,17 @@ public class PlantaService {
                             findAllByIdPlanta_Id(planta.getIdPlanta()).
                             stream().map((element) -> modelMapper.map(element, RelPlantaProveedorDto.class)
                             ).toList();
-
+            //Ahora busco a los clientes asociados a la planta
+            List<ClienteDto> relClienteDtoList =
+                    this.relPlantaClienteRepository.
+                            findAllById_IdPlanta(planta.getIdPlanta()).
+                            stream().map((element) -> modelMapper.map(element, ClienteDto.class)).
+                            toList();
 
             //Los encapsulo en la respuesta
             retorno.add(new ResPlantaWithDestino(
                     this.modelMapper.map(planta, PlantaDto.class),
-                    lista, relPlantaProveedorDtoList));
+                    lista, relPlantaProveedorDtoList, relClienteDtoList));
         }
         //Retorno el objeto creado
         return new PageImpl<>(retorno, p.getPageable(), p.getTotalElements());
