@@ -8,12 +8,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pe.com.isesystem.gpservice.dto.ProveedorDto;
 import pe.com.isesystem.gpservice.dto.RelProvTiposervDto;
+import pe.com.isesystem.gpservice.dto.RelProveedorCuentaDto;
 import pe.com.isesystem.gpservice.dto.TipoServicioDto;
 import pe.com.isesystem.gpservice.model.Proveedor;
 import pe.com.isesystem.gpservice.model.RelProvTiposerv;
+import pe.com.isesystem.gpservice.model.RelProveedorCuenta;
 import pe.com.isesystem.gpservice.model.TipoServicio;
 import pe.com.isesystem.gpservice.repository.ProveedorRepository;
 import pe.com.isesystem.gpservice.repository.RelProvServRepository;
+import pe.com.isesystem.gpservice.repository.RelProveedorCuentaRepository;
 import pe.com.isesystem.gpservice.repository.TarifarioGeneralRepository;
 import pe.com.isesystem.gpservice.response.ResProveedorWithService;
 
@@ -26,18 +29,20 @@ public class ProveedorService {
     private final RelProvServRepository relProvServRepository;
     private final ModelMapper modelMapper;
     private final TarifarioGeneralRepository tarifarioGeneralRepository;
+    private final RelProveedorCuentaRepository relProveedorCuentaRepository;
     private final TipoServicioService tipoServicioService;
     private final EmbarcacionService embarcacionService;
 
     public ProveedorService(ProveedorRepository proveedorRepository, ModelMapper modelMapper, RelProvServRepository relProvServRepository,
                             TarifarioGeneralRepository tarifarioGeneralRepository, TipoServicioService tipoServicioService,
-                            EmbarcacionService embarcacionService){
+                            EmbarcacionService embarcacionService, RelProveedorCuentaRepository relProveedorCuentaRepository){
         this.proveedorRepository = proveedorRepository;
         this.modelMapper = modelMapper;
         this.relProvServRepository = relProvServRepository;
         this.tarifarioGeneralRepository = tarifarioGeneralRepository;
         this.tipoServicioService = tipoServicioService;
         this.embarcacionService = embarcacionService;
+        this.relProveedorCuentaRepository = relProveedorCuentaRepository;
     }
 
     public List<ProveedorDto> getAllProveedor(Boolean estadoReg){
@@ -69,17 +74,24 @@ public class ProveedorService {
         List<ProveedorDto> contentProveedorDto = p.getContent().stream()
                 .map(this::mapProveedorToProveedorDto)
                 .toList();
-
+        //Por cada Proveedor encuentra su servicio relacionado
         for(ProveedorDto proveedor:contentProveedorDto){
             List<RelProvTiposerv> relProvTiposervs = relProvServRepository.findAllById_IdProveedor(proveedor.getId());
             List<TipoServicioDto> lista = new ArrayList<>();
+            RelProveedorCuentaDto relPC = new RelProveedorCuentaDto();
 
             if(!relProvTiposervs.isEmpty()){
                 for(RelProvTiposerv rel:relProvTiposervs){
                     lista.add(this.modelMapper.map(rel.getIdTipoServicio(), TipoServicioDto.class));
                 }
             }
-            retorno.add(new ResProveedorWithService(this.modelMapper.map(proveedor, ProveedorDto.class), lista ));
+
+            //Ahora por cada Proveedor busco su cuenta
+            Optional<RelProveedorCuenta> relProveedorCuenta = relProveedorCuentaRepository.findFirstById_IdProveedor(proveedor.getId());
+            if (relProveedorCuenta.isPresent()){
+                relPC = modelMapper.map(relProveedorCuenta.get(), RelProveedorCuentaDto.class);
+            }
+            retorno.add(new ResProveedorWithService(this.modelMapper.map(proveedor, ProveedorDto.class), lista, relPC ));
         }
 
         return new PageImpl<>(retorno, p.getPageable(), p.getTotalElements());
@@ -92,12 +104,20 @@ public class ProveedorService {
             for(Proveedor proveedor:proveedors){
                 List<RelProvTiposerv> relProvTiposervs = relProvServRepository.findAllById_IdProveedor(proveedor.getId());
                 List<TipoServicioDto> lista = new ArrayList<>();
+                RelProveedorCuentaDto relPC = new RelProveedorCuentaDto();
+
                 if(!relProvTiposervs.isEmpty()){
                     for(RelProvTiposerv rel:relProvTiposervs){
                         lista.add(this.modelMapper.map(rel.getIdTipoServicio(), TipoServicioDto.class));
                     }
                 }
-                retorno.add(new ResProveedorWithService(this.modelMapper.map(proveedor, ProveedorDto.class), lista ));
+
+                //Ahora por cada Proveedor busco su cuenta
+                Optional<RelProveedorCuenta> relProveedorCuenta = relProveedorCuentaRepository.findFirstById_IdProveedor(proveedor.getId());
+                if (relProveedorCuenta.isPresent()){
+                    relPC = modelMapper.map(relProveedorCuenta.get(), RelProveedorCuentaDto.class);
+                }
+                retorno.add(new ResProveedorWithService(this.modelMapper.map(proveedor, ProveedorDto.class), lista, relPC ));
             }
         }
         return retorno;
