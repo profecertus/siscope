@@ -32,8 +32,8 @@ public class Embarcacion {
     @Column(name = "NUM_MATRICULA", length = 50)
     private String numMatricula;
 
-    @Column(name = "NUMERO_EJE", length = 50)
-    private String numEje;
+    @Column(name = "NUMERO_EJE")
+    private Integer numEje;
 
     @Column(name = "TONELAJE", precision = 10, scale = 2)
     private BigDecimal tonelaje;

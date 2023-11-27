@@ -16,7 +16,7 @@ public class EmbarcacionDto  implements Serializable {
     private ProveedorDto idProveedor;
     private String nombre;
     private String numMatricula;
-    private String numEje;
+    private Integer numEje;
     private BigDecimal tonelaje;
     private Boolean estado;
     private Boolean estadoReg;
