@@ -77,7 +77,7 @@ public class ProveedorService {
             List<TipoServicioDto> lista = new ArrayList<>();
             RelProveedorCuentaDto relPC = new RelProveedorCuentaDto();
             relPC.setIdProveedor(new ProveedorDto());
-            relPC.setIdBanco(new BancoDto());
+            //relPC.setIdBanco(new BancoDto());
             relPC.setIdMoneda(new MonedaDto());
             relPC.setId(new RelProveedorCuentaIdDto());
 
