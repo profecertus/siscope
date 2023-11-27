@@ -6,10 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pe.com.isesystem.gpservice.dto.ProveedorDto;
-import pe.com.isesystem.gpservice.dto.RelProvTiposervDto;
-import pe.com.isesystem.gpservice.dto.RelProveedorCuentaDto;
-import pe.com.isesystem.gpservice.dto.TipoServicioDto;
+import pe.com.isesystem.gpservice.dto.*;
 import pe.com.isesystem.gpservice.model.Proveedor;
 import pe.com.isesystem.gpservice.model.RelProvTiposerv;
 import pe.com.isesystem.gpservice.model.RelProveedorCuenta;
@@ -79,8 +76,14 @@ public class ProveedorService {
             List<RelProvTiposerv> relProvTiposervs = relProvServRepository.findAllById_IdProveedor(proveedor.getId());
             List<TipoServicioDto> lista = new ArrayList<>();
             RelProveedorCuentaDto relPC = new RelProveedorCuentaDto();
+            relPC.setIdProveedor(new ProveedorDto());
+            relPC.setIdBanco(new BancoDto());
+            relPC.setIdMoneda(new MonedaDto());
+            relPC.setId(new RelProveedorCuentaIdDto());
+
 
             if(!relProvTiposervs.isEmpty()){
+                System.out.println("ENTRO");
                 for(RelProvTiposerv rel:relProvTiposervs){
                     lista.add(this.modelMapper.map(rel.getIdTipoServicio(), TipoServicioDto.class));
                 }
