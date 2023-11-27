@@ -323,6 +323,31 @@ CREATE TABLE IF NOT EXISTS public.tarifario_planta
         ON DELETE NO ACTION
 );
 
+CREATE TABLE IF NOT EXISTS public.rel_planta_cliente
+(
+    ruc character(11) COLLATE pg_catalog."default" NOT NULL,
+    id_planta integer NOT NULL,
+    CONSTRAINT rel_planta_cliente_pk PRIMARY KEY (ruc, id_planta),
+    CONSTRAINT rel_planta_cliente_cliente_ruc_fk FOREIGN KEY (ruc)
+        REFERENCES public.cliente (ruc) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT rel_planta_cliente_planta_id_planta_fk FOREIGN KEY (id_planta)
+        REFERENCES public.planta (id_planta) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+
+GRANT UPDATE, DELETE, INSERT, SELECT ON TABLE public.rel_planta_cliente TO "siscope-dev";
+
+GRANT UPDATE, SELECT, INSERT, DELETE ON TABLE public.rel_planta_cliente TO "siscope-main";
+
+GRANT UPDATE, INSERT, SELECT ON TABLE public.rel_planta_cliente TO "siscope-tarifario";
+
+COMMENT ON TABLE public.rel_planta_cliente
+    IS 'Relacion entre la planta con el cliente';
+
 GRANT UPDATE, DELETE, INSERT, SELECT ON TABLE public.tarifario_planta TO "siscope-dev";
 
 GRANT UPDATE, SELECT, INSERT, DELETE ON TABLE public.tarifario_planta TO "siscope-main";
