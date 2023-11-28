@@ -64,6 +64,9 @@ public class ProovedorController {
     public ResponseEntity<Object> saveProveedorWithService(@RequestBody ResProveedorWithService proveedorDto){
         Long idProveedor = proveedorService.save(proveedorDto.getProveedor());
         proveedorService.saveRelProvServ(proveedorDto.getTipoServicioDtos(), idProveedor);
+        proveedorService.saveCuenta(idProveedor,
+                proveedorDto.getCuenta().getIdBanco().getIdBanco(),
+                proveedorDto.getCuenta().getId().getNumeroCuenta());
         RespuestaHttp resp = new RespuestaHttp();
         resp.setValorDevuelto(idProveedor);
         return new ResponseEntity<>(resp, HttpStatus.OK);

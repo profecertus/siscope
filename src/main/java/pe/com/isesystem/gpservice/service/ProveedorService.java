@@ -75,7 +75,8 @@ public class ProveedorService {
         for(ProveedorDto proveedor:contentProveedorDto){
             List<RelProvTiposerv> relProvTiposervs = relProvServRepository.findAllById_IdProveedor(proveedor.getId());
             List<TipoServicioDto> lista = new ArrayList<>();
-            RelProveedorCuentaDto relPC = new RelProveedorCuentaDto();
+            RelProveedorCuentaDto relPC = new
+                    RelProveedorCuentaDto();
             relPC.setIdProveedor(new ProveedorDto());
             //relPC.setIdBanco(new BancoDto());
             relPC.setIdMoneda(new MonedaDto());
@@ -83,7 +84,6 @@ public class ProveedorService {
 
 
             if(!relProvTiposervs.isEmpty()){
-                System.out.println("ENTRO");
                 for(RelProvTiposerv rel:relProvTiposervs){
                     lista.add(this.modelMapper.map(rel.getIdTipoServicio(), TipoServicioDto.class));
                 }
@@ -138,7 +138,8 @@ public class ProveedorService {
     }
 
     @Transactional
-    public Long save(ProveedorDto proveedorDto){
+    public Long
+    save(ProveedorDto proveedorDto){
         Proveedor proveedor = proveedorRepository.save( this.modelMapper.map( proveedorDto, Proveedor.class) );
         return proveedor.getId();
     }
@@ -157,7 +158,7 @@ public class ProveedorService {
                     if (tsDto.getTipoTarifa() == 1) {
                         lista.add(rel.getId());
                         if (!tarifarioGeneralRepository.
-                                findById_IdProveedorAndId_IdTipoServicio(IdProveedor, rel.getId()).isPresent()){
+                                findById_IdProveedorAndId_IdTipoServicioAndId_IdDia(IdProveedor, rel.getId(), proveedorRepository.getFecha()).isPresent()){
                             tarifarioGeneralRepository.insertTarifario(IdProveedor, rel.getId());
                         }
                     }
@@ -167,4 +168,9 @@ public class ProveedorService {
         }
     }
 
+    @Transactional
+    public void saveCuenta(Long idProveedor, Long idBanco, String numeroCuenta) {
+        if(relProveedorCuentaRepository.totalRegistros(idProveedor, idBanco, numeroCuenta) <= 0)
+            relProveedorCuentaRepository.guardar(idProveedor, idBanco, numeroCuenta);
+    }
 }

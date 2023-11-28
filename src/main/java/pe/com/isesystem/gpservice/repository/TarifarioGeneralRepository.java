@@ -21,7 +21,7 @@ public interface TarifarioGeneralRepository extends JpaRepository<TarifarioGener
            nativeQuery = true)
     void  insertTarifario(@Param("idProveedor") Long idProveedor, @Param("idTipoServicio") Long idTipoServicio);
 
-    Optional<TarifarioGeneral> findById_IdProveedorAndId_IdTipoServicio(Long idProveedor, Long idTipoServicio);
+    Optional<TarifarioGeneral> findById_IdProveedorAndId_IdTipoServicioAndId_IdDia(Long idProveedor, Long idTipoServicio, Long idDia);
 
     @Modifying
     @Transactional
