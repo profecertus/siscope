@@ -24,6 +24,9 @@ public class Camara {
     @Column(name = "MODELO", length = 50)
     private String modelo;
 
+    @Column(name = "EJE", length = 50)
+    private Long eje;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "ID_PROVEEDOR", nullable = false)

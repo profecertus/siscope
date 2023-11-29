@@ -13,7 +13,8 @@ import pe.com.isesystem.gpservice.service.CamaraService;
 
 @RestController
 @RequestMapping("/camara/v1")
-public class CamaraController {
+public class
+CamaraController {
     @Autowired
     CamaraService camaraService;
 
