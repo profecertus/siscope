@@ -64,7 +64,7 @@ public class ProovedorController {
     public ResponseEntity<Object> saveProveedorWithService(@RequestBody ResProveedorWithService proveedorDto){
         Long idProveedor = proveedorService.save(proveedorDto.getProveedor());
         proveedorService.saveRelProvServ(proveedorDto.getTipoServicioDtos(), idProveedor);
-        if (proveedorDto.getCuenta().getIdBanco().getIdBanco() != null){
+        if (proveedorDto.getCuenta().getIdBanco() != null){
             proveedorService.saveCuenta(idProveedor,
                     proveedorDto.getCuenta().getIdBanco().getIdBanco(),
                     proveedorDto.getCuenta().getId().getNumeroCuenta());
