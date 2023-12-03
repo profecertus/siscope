@@ -27,10 +27,10 @@ public class Proveedor {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "ID_TIPODOC", nullable = false)
+    @JoinColumn(name = "ID_TIPODOC", nullable = true)
     private TipoDocumento idTipodoc;
 
-    @Column(name = "NUMERO_DOCUMENTO", nullable = false, length = 20)
+    @Column(name = "NUMERO_DOCUMENTO", nullable = true, length = 20)
     private String numeroDocumento;
 
     @Column(name = "DIRECCION", length = 100)
