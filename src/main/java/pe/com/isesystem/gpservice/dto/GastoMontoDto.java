@@ -11,4 +11,5 @@ public class GastoMontoDto {
     private String abreviatura;
     private Number precio;
     private String precioCadena;
+    private Long idMoneda;
 }

@@ -194,6 +194,7 @@ public class ProveedorService {
             respuesta.setAbreviatura(objects[0].toString());
             respuesta.setPrecio( (Number) objects[1]);
             respuesta.setPrecioCadena( objects[0].toString().trim() + ' '  + objects[1].toString().trim());
+            respuesta.setIdMoneda( Long.parseLong( objects[2].toString() ) );
         }
         return respuesta;
     }
