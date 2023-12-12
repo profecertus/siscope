@@ -4,22 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pe.com.isesystem.gpservice.configuration.RespuestaHttp;
+import pe.com.isesystem.gpservice.dto.GastoMontoDto;
 import pe.com.isesystem.gpservice.dto.GastoProveedorDto;
 import pe.com.isesystem.gpservice.dto.ProveedorDto;
-import pe.com.isesystem.gpservice.model.Proveedor;
 import pe.com.isesystem.gpservice.response.ResProveedorWithService;
 import pe.com.isesystem.gpservice.service.ProveedorService;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/proveedor/v1")
@@ -59,7 +55,7 @@ public class ProovedorController {
     }
 
     @GetMapping("/obtenerPrecio/{idProveedor}/{tipoServicio}/{idDia}")
-    public ResponseEntity<Number> getPrecioxDia(@PathVariable Long idProveedor,@PathVariable Long tipoServicio,@PathVariable Long idDia){
+    public ResponseEntity<GastoMontoDto> getPrecioxDia(@PathVariable Long idProveedor, @PathVariable Long tipoServicio, @PathVariable Long idDia){
         return new ResponseEntity<>(proveedorService.getMontoPorDia(idProveedor, tipoServicio, idDia), HttpStatus.OK);
     }
 

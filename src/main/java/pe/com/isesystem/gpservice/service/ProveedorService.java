@@ -187,7 +187,14 @@ public class ProveedorService {
         return respuesta;
     }
 
-    public Number getMontoPorDia(Long idProveedor, Long tipoServicio, Long idDia){
-        return proveedorRepository.getMontoPorDia(idProveedor, tipoServicio, idDia);
+    public GastoMontoDto getMontoPorDia(Long idProveedor, Long tipoServicio, Long idDia){
+        List<Object[]> resp = proveedorRepository.getMontoPorDia(idProveedor, tipoServicio, idDia);
+        GastoMontoDto respuesta = new GastoMontoDto();
+        for (Object[] objects : resp) {
+            respuesta.setAbreviatura(objects[0].toString());
+            respuesta.setPrecio( (Number) objects[1]);
+            respuesta.setPrecioCadena( objects[0].toString().trim() + ' '  + objects[1].toString().trim());
+        }
+        return respuesta;
     }
 }
