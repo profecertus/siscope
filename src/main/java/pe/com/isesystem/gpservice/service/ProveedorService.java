@@ -173,4 +173,21 @@ public class ProveedorService {
         if(relProveedorCuentaRepository.totalRegistros(idProveedor, idBanco, numeroCuenta) <= 0)
             relProveedorCuentaRepository.guardar(idProveedor, idBanco, numeroCuenta);
     }
+
+    public List<GastoProveedorDto> getProveedorPorTipo(Long tipoServicio){
+        List<Object[]> resp = proveedorRepository.getProveedorPorTipo(tipoServicio);
+        List<GastoProveedorDto> respuesta = new ArrayList<>();
+        for (Object[] objects : resp) {
+            GastoProveedorDto gastoProveedorDto = new GastoProveedorDto();
+            gastoProveedorDto.setIdProveedor(Long.parseLong( objects[0].toString() ) );
+            gastoProveedorDto.setRazonSocial((String) objects[1]);
+            gastoProveedorDto.setIdTipoServicio(Long.parseLong( objects[2].toString() ) );
+            respuesta.add(gastoProveedorDto);
+        }
+        return respuesta;
+    }
+
+    public Number getMontoPorDia(Long idProveedor, Long tipoServicio, Long idDia){
+        return proveedorRepository.getMontoPorDia(idProveedor, tipoServicio, idDia);
+    }
 }

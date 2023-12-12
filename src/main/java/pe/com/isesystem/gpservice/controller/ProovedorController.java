@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pe.com.isesystem.gpservice.configuration.RespuestaHttp;
+import pe.com.isesystem.gpservice.dto.GastoProveedorDto;
 import pe.com.isesystem.gpservice.dto.ProveedorDto;
 import pe.com.isesystem.gpservice.model.Proveedor;
 import pe.com.isesystem.gpservice.response.ResProveedorWithService;
@@ -45,11 +46,21 @@ public class ProovedorController {
         return new ResponseEntity<>(proveedorDtoList, HttpStatus.OK);
     }
 
+    @GetMapping("/getProveedorPorTipo/{tipoServicio}")
+    public ResponseEntity<List<GastoProveedorDto>> getProveedorPorTipo(@PathVariable Long tipoServicio){
+        return new ResponseEntity<>(proveedorService.getProveedorPorTipo(tipoServicio),
+                HttpStatus.OK);
+    }
 
     @GetMapping("/obtenerProveedor/{proveedor}")
     public ResponseEntity<ProveedorDto> getProveedor(@PathVariable Long proveedor){
         ProveedorDto proveedorDto =  proveedorService.getById(proveedor);
         return new ResponseEntity<>(proveedorDto, proveedorDto==null?HttpStatus.NO_CONTENT:HttpStatus.OK);
+    }
+
+    @GetMapping("/obtenerPrecio/{idProveedor}/{tipoServicio}/{idDia}")
+    public ResponseEntity<Number> getPrecioxDia(@PathVariable Long idProveedor,@PathVariable Long tipoServicio,@PathVariable Long idDia){
+        return new ResponseEntity<>(proveedorService.getMontoPorDia(idProveedor, tipoServicio, idDia), HttpStatus.OK);
     }
 
     @PostMapping("/saveProveedor")
