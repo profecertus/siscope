@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://69.164.197.95:5432/SISCOPE
+    url: jdbc:postgresql://161.132.47.74:5432/SISCOPE_DEMO
     username: siscope-main
     password: 515c0p3
     driver-class-name: org.postgresql.Driver
@@ -21,6 +21,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  rabbitmq:
+    host: 161.132.47.74
+    username: 515c0p3
+    password: Niwde123$
 
 app:
   ws:

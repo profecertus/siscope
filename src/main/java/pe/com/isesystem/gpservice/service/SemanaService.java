@@ -8,17 +8,22 @@ import org.springframework.stereotype.Service;
 import pe.com.isesystem.gpservice.dto.SemanaDto;
 import pe.com.isesystem.gpservice.model.Semana;
 import pe.com.isesystem.gpservice.repository.SemanaRepository;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class SemanaService  {
     SemanaRepository semanaRepository;
     EmbarcacionService embarcacionService;
     ModelMapper modelMapper;
+    private final AmqpTemplate amqpTemplate;
 
-    public SemanaService(SemanaRepository semanaRepository, ModelMapper modelMapper, EmbarcacionService embarcacionService){
+    public SemanaService(SemanaRepository semanaRepository, ModelMapper modelMapper,
+                         EmbarcacionService embarcacionService, AmqpTemplate amqpTemplate){
         this.semanaRepository = semanaRepository;
         this.modelMapper = modelMapper;
         this.embarcacionService = embarcacionService;
+        this.amqpTemplate = amqpTemplate;
     }
 
     public Page<SemanaDto> getAll(Pageable pageable){
@@ -29,6 +34,8 @@ public class SemanaService  {
     }
 
     public SemanaDto save(SemanaDto semanaDto){
+        //Notifico el cambio a RabbitMQ
+        amqpTemplate.convertAndSend("cambio-semana",semanaDto);
         return modelMapper.map(semanaRepository.save(modelMapper.map(semanaDto, Semana.class)), SemanaDto.class);
     }
 }
