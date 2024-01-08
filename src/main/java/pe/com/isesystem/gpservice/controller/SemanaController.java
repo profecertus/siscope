@@ -17,9 +17,15 @@ public class SemanaController {
     @Autowired
     SemanaService semanaService;
     @GetMapping("/getAllSemana/{numpag}/{tampag}")
-    public Page<SemanaDto> getAllTrabajador(@PathVariable int numpag, @PathVariable int tampag){
+    public Page<SemanaDto> getAllSemana(@PathVariable int numpag, @PathVariable int tampag){
         final Pageable pageable = PageRequest.of(numpag, tampag );
         return semanaService.getAll(pageable);
+    }
+
+    @GetMapping("/getSemana/{idSemana}")
+    public ResponseEntity<SemanaDto> getSemana(@PathVariable Long idSemana){
+        return new ResponseEntity<>(semanaService.getSemana(idSemana).get(), HttpStatus.OK);
+
     }
 
     @PostMapping("/saveSemana")

@@ -9,7 +9,8 @@ import pe.com.isesystem.gpservice.dto.SemanaDto;
 import pe.com.isesystem.gpservice.model.Semana;
 import pe.com.isesystem.gpservice.repository.SemanaRepository;
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 @Service
 public class SemanaService  {
@@ -37,5 +38,9 @@ public class SemanaService  {
         //Notifico el cambio a RabbitMQ
         amqpTemplate.convertAndSend("cambio-semana",semanaDto);
         return modelMapper.map(semanaRepository.save(modelMapper.map(semanaDto, Semana.class)), SemanaDto.class);
+    }
+
+    public Optional<SemanaDto> getSemana(Long idSemana){
+        return semanaRepository.findById(idSemana).map((element) -> modelMapper.map(element, SemanaDto.class));
     }
 }
