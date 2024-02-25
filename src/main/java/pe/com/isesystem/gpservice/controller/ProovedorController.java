@@ -59,6 +59,11 @@ public class ProovedorController {
         return new ResponseEntity<>(proveedorService.getMontoPorDia(idProveedor, tipoServicio, idDia), HttpStatus.OK);
     }
 
+    @GetMapping("/obtenerPrecioOMaximo/{idProveedor}/{tipoServicio}/{idDia}")
+    public ResponseEntity<GastoMontoDto> getPrecioxDiaOMaximo(@PathVariable Long idProveedor, @PathVariable Long tipoServicio, @PathVariable Long idDia){
+        return new ResponseEntity<>(proveedorService.getMontoPorDiaOMaximo(idProveedor, tipoServicio, idDia), HttpStatus.OK);
+    }
+
     @PostMapping("/saveProveedor")
     public ResponseEntity<Object> saveProveedor(@RequestBody ProveedorDto proveedorDto){
         Long idProveedor = proveedorService.save(proveedorDto);

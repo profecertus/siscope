@@ -45,4 +45,22 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Long> {
     List<Object[]> getMontoPorDia(@Param("idProveedor") Long idProveedor,
                                   @Param("tipoServicio") Long tipoServicio,
                                   @Param("idDia") Long idDia);
+
+    @Query(value="select m.abreviatura, tg.monto, m.id_moneda " +
+            "from tarifario_general tg " +
+            "inner join moneda m " +
+            "on m.id_moneda = tg.id_moneda " +
+            "where tg.id_proveedor = :idProveedor " +
+            "and tg.id_tipo_servicio = :tipoServicio " +
+            "and tg.id_dia = ( " +
+            "select id_dia " +
+            "from tarifario_general " +
+            "where id_tipo_servicio = :tipoServicio " +
+            "and id_proveedor = :idProveedor " +
+            "and monto >0 " +
+            "order by id_dia desc " +
+            "limit 1 " +
+            ")", nativeQuery = true)
+    List<Object[]> getMontoPorDiaOMaximo(@Param("idProveedor") Long idProveedor,
+                                  @Param("tipoServicio") Long tipoServicio);
 }

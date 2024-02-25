@@ -190,12 +190,28 @@ public class ProveedorService {
     public GastoMontoDto getMontoPorDia(Long idProveedor, Long tipoServicio, Long idDia){
         List<Object[]> resp = proveedorRepository.getMontoPorDia(idProveedor, tipoServicio, idDia);
         GastoMontoDto respuesta = new GastoMontoDto();
+        return getGastoMontoDto(resp, respuesta);
+    }
+
+    public GastoMontoDto getMontoPorDiaOMaximo(Long idProveedor, Long tipoServicio, Long idDia){
+        List<Object[]> resp = proveedorRepository.getMontoPorDia(idProveedor, tipoServicio, idDia);
+        GastoMontoDto respuesta = new GastoMontoDto();
+        if (resp.isEmpty() || (Integer) resp.get(0)[1] == 0 ){
+            resp = proveedorRepository.getMontoPorDiaOMaximo(idProveedor, tipoServicio);
+        }
+
+        return getGastoMontoDto(resp, respuesta);
+    }
+
+    private GastoMontoDto getGastoMontoDto(List<Object[]> resp, GastoMontoDto respuesta) {
         for (Object[] objects : resp) {
             respuesta.setAbreviatura(objects[0].toString());
             respuesta.setPrecio( (Number) objects[1]);
             respuesta.setPrecioCadena( objects[0].toString().trim() + ' '  + objects[1].toString().trim());
             respuesta.setIdMoneda( Long.parseLong( objects[2].toString() ) );
         }
+
+
         return respuesta;
     }
 }
