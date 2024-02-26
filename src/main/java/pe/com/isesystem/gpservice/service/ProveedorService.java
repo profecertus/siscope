@@ -196,8 +196,8 @@ public class ProveedorService {
     public GastoMontoDto getMontoPorDiaOMaximo(Long idProveedor, Long tipoServicio, Long idDia){
         List<Object[]> resp = proveedorRepository.getMontoPorDia(idProveedor, tipoServicio, idDia);
         GastoMontoDto respuesta = new GastoMontoDto();
-        System.out.println(Arrays.toString(resp.get(0)));
-        if (resp.isEmpty() || (Integer) resp.get(0)[1] == 0 ){
+
+        if (resp.isEmpty()){
             resp = proveedorRepository.getMontoPorDiaOMaximo(idProveedor, tipoServicio);
         }
 
